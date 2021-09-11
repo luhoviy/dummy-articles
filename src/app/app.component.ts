@@ -13,6 +13,7 @@ export class AppComponent {
   constructor(private serviceWorkerUpdates: SwUpdate) {
     if (this.serviceWorkerUpdates.isEnabled) {
       this.serviceWorkerUpdates.available.subscribe(async () => {
+        console.log("CHANGES DETECTED");
         try {
           await this.serviceWorkerUpdates.activateUpdate();
           document.location.reload();
