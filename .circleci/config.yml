@@ -32,7 +32,7 @@ jobs:
           name: Unit Testing
           command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
-  build:
+  deploy:
     docker:
       - image: 'circleci/node:8'
     working_directory: ~/repo
@@ -71,7 +71,9 @@ workflows:
   build_and_test:
     jobs:
       - test
-      - build
+      - deploy
+        requires:
+          - test
 branches:
   only:
     - develop
