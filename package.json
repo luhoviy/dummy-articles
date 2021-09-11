@@ -24,11 +24,14 @@
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
     "@angular/service-worker": "~12.2.0",
+    "@ngrx/effects": "^12.4.0",
+    "@ngrx/store": "^12.4.0",
+    "@ngrx/store-devtools": "^12.4.0",
+    "firebase": "^9.0.2",
+    "rxfire": "^6.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.11.4",
-    "firebase": "^9.0.0",
-    "rxfire": "^6.0.0"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/architect": "^0.1200.0",
@@ -51,6 +54,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "ngrx-store-logger": "^0.2.4",
     "open": "^7.0.3",
     "start-server-and-test": "^1.14.0",
     "tslint": "^6.1.3",
