@@ -1,6 +1,8 @@
 version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1
 jobs:
-  test:
+  unit-testing:
     docker:
       - image: 'circleci/node:10-browsers'
     working_directory: ~/repo
@@ -70,10 +72,16 @@ workflows:
   version: 2
   test_and_deploy:
     jobs:
-      - test
+      - e2e-testing:
+          start: npm start
+          wait-on: 'http://localhost:4200'
+          store_artifacts: true
+      - unit-testing:
+          requires:
+            - e2e-testing
       - deploy:
           requires:
-            - test
+            - unit-testing
 branches:
   only:
     - develop
