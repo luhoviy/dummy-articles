@@ -71,9 +71,9 @@ workflows:
   build_and_test:
     jobs:
       - test
-      - deploy
-        requires:
-          - test
+      - deploy:
+          requires:
+            - test
 branches:
   only:
     - develop
