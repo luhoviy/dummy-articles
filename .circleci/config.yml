@@ -29,6 +29,9 @@ jobs:
             - node_modules
           key: 'v1-dependencies-{{ checksum "package.json" }}'
       - run:
+          name: Unit Testing
+          command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+      - run:
           name: 'Build Project'
           command: 'npm run build'
       - run:
