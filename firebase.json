@@ -2,7 +2,7 @@
   "hosting": [
     {
       "target": "dummy-articles",
-      "public": "dist/dummy-articles",
+      "public": "dist",
       "ignore": [
         "**/.*"
       ],
