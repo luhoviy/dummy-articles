@@ -6,22 +6,25 @@ jobs:
     working_directory: ~/repo
     steps:
       - run:
-          name: Install node@v14.16.0
+          name: Swap node versions
           command: |
-            /load-nvm.sh
+            set +e
+            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
             nvm install v14.16.0
-            nvm alias default v14.16.0
+            nvm alias default 14.16.0
+
+            echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
+            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
             npm version
       - checkout
       - restore_cache:
           keys:
             - 'v1-dependencies-{{ checksum "package.json" }}'
             - v1-dependencies-
-      - run:
-          name: 'Install dependencies'
-          command: |
-            npm version
-            npm install
+      - run: "npm install"
       - save_cache:
           paths:
             - node_modules
