@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@8.3.1
+  cypress: cypress-io/cypress@8
 jobs:
   unit-testing:
     docker:
