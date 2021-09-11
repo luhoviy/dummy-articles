@@ -72,16 +72,16 @@ workflows:
   version: 2
   test_and_deploy:
     jobs:
+      - unit-testing
       - cypress/run:
+          requires:
+            - unit-testing
           start: npm start
           wait-on: 'http://localhost:4200'
           store_artifacts: true
-      - unit-testing:
-          requires:
-            - cypress/run
       - deploy:
           requires:
-            - unit-testing
+            - cypress/run
 branches:
   only:
     - develop
