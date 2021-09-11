@@ -78,7 +78,7 @@ workflows:
           store_artifacts: true
       - unit-testing:
           requires:
-            - e2e-testing
+            - cypress/run
       - deploy:
           requires:
             - unit-testing
