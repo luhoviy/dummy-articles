@@ -1,0 +1,91 @@
+<app-auth-layout image="login">
+  <div h-100 fxLayout="column" fxLayoutAlign="start space-between">
+    <div
+      fxFlex
+      fxLayoutAlign="center center"
+      class="form-container"
+    >
+      <mat-card fxFlex="45" fxFlex.lt-sm="90" fxFlex.lt-md="60" fxFlex.md="85">
+        <h1 class="m-0">Welcome back</h1>
+        <p>Sign in to manage your account.</p>
+
+        <form
+          [formGroup]="form"
+          (ngSubmit)="loginWithEmail()"
+          autocomplete="on"
+          class="form-container__form mt-2"
+          fxLayout="column"
+        >
+          <mat-form-field w-100 appearance="fill">
+            <mat-label>Email address</mat-label>
+            <input
+              name="email"
+              autocomplete="on"
+              type="email"
+              matInput
+              formControlName="email"
+              placeholder="Enter you email address"
+            />
+            <mat-icon class="mr-05" matSuffix>email</mat-icon>
+            <mat-error *ngIf="form.get('email').hasError('email')">
+              Invalid email address
+            </mat-error>
+            <mat-error *ngIf="form.get('email').hasError('required')">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field w-100 appearance="fill" class="mt-05 mb-05">
+            <mat-label>Password</mat-label>
+            <input
+              name="password"
+              autocomplete="on"
+              [type]="hidePassword ? 'password' : 'text'"
+              matInput
+              formControlName="password"
+              placeholder="Enter your password"
+            />
+            <button
+              type="button"
+              mat-icon-button
+              matSuffix
+              appStopPropagation
+              (click)="hidePassword = !hidePassword"
+            >
+              <mat-icon>
+                {{ hidePassword ? "visibility_off" : "visibility" }}
+              </mat-icon>
+            </button>
+            <mat-error *ngIf="form.get('password').hasError('minlength')">
+              Password should contain at least 6 symbols
+            </mat-error>
+            <mat-error *ngIf="form.get('password').hasError('required')">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+
+          <p link routerLink="/password-recovery">Forgot your password?</p>
+
+          <button
+            [disabled]="
+              form.pristine || form.invalid || !(isNetworkOnline$ | async)
+            "
+            mat-raised-button
+            type="submit"
+            color="primary"
+            class="mt-05"
+          >
+            <span class="mat-h3"> Sign In </span>
+          </button>
+        </form>
+
+        <app-auth-providers></app-auth-providers>
+      </mat-card>
+    </div>
+
+    <p w-100 text-center class="pb-1 m-0">
+      Don't have account?
+      <span routerLink="/sign-up" link>Sign Up</span>
+    </p>
+  </div>
+</app-auth-layout>

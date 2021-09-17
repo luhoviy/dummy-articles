@@ -1,0 +1,10 @@
+<div
+  [@fadeFromLeftState]="(isOnline | async) ? 'hidden' : 'shown'"
+  class="no-connection-container p-1 br-10 mr-1"
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  fxLayoutGap="1rem"
+>
+  <mat-spinner fxFlex="25px" class="grey" [diameter]="25"></mat-spinner>
+  <span class="mat-body">No internet connection. Trying to reconnect...</span>
+</div>

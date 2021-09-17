@@ -1,0 +1,25 @@
+@import "src/app/shared/variables";
+
+.auth-container {
+  &__img {
+    min-height: 100vh;
+    max-height: 100vh;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .form-container {
+    &__form {
+      font-size: 0.9rem;
+
+      .mat-caption,
+      mat-icon {
+        color: $light-grey;
+      }
+
+      .mat-form-field-infix {
+        width: auto;
+      }
+    }
+  }
+}

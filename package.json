@@ -10,16 +10,21 @@
     "e2e": "ng e2e",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "e2e:ci": "start-server-and-test start http://localhost:4200 cypress:run"
+    "e2e:ci": "start-server-and-test start http://localhost:4200 cypress:run",
+    "refactor": "pretty-quick --staged",
+    "prepare": "husky install"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.2.0",
+    "@angular/cdk": "^12.2.5",
     "@angular/common": "~12.2.0",
     "@angular/compiler": "~12.2.0",
     "@angular/core": "~12.2.0",
     "@angular/fire": "^7.0.4",
+    "@angular/flex-layout": "^12.0.0-beta.34",
     "@angular/forms": "~12.2.0",
+    "@angular/material": "^12.2.5",
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
@@ -28,6 +33,8 @@
     "@ngrx/store": "^12.4.0",
     "@ngrx/store-devtools": "^12.4.0",
     "firebase": "^9.0.2",
+    "lodash": "^4.17.21",
+    "ngx-spinner": "^12.0.0",
     "rxfire": "^6.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
@@ -40,6 +47,7 @@
     "@angular/compiler-cli": "~12.2.0",
     "@cypress/schematic": "^1.5.1",
     "@types/jasmine": "~3.8.0",
+    "@types/lodash": "^4.14.172",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.2",
     "cypress": "8.3.1",
@@ -56,8 +64,11 @@
     "karma-jasmine-html-reporter": "~1.7.0",
     "ngrx-store-logger": "^0.2.4",
     "open": "^7.0.3",
+    "prettier": "^2.4.0",
+    "pretty-quick": "^3.1.1",
     "start-server-and-test": "^1.14.0",
     "tslint": "^6.1.3",
-    "typescript": "~4.3.5"
+    "typescript": "~4.3.5",
+    "husky": "^7.0.0"
   }
 }
