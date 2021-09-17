@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from "@angular/fire/compat/auth";
-import { fromPromise } from "rxjs/internal-compatibility";
-import firebase from "firebase/compat/app";
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { fromPromise } from 'rxjs/internal-compatibility';
+import firebase from 'firebase/compat/app';
 import { Observable, of } from 'rxjs';
-import { AuthProviderType, User } from "../shared/auth.model";
+import { AuthProviderType, User } from '../shared/auth.model';
 import {
   EmailAuthProvider,
   getAuth,
@@ -11,24 +11,28 @@ import {
   linkWithPopup,
   signInWithPopup,
   unlink,
-  updateProfile
-} from "@angular/fire/auth";
-import { AngularFirestore } from "@angular/fire/compat/firestore";
-import { assign } from "lodash";
-import { filter, take } from "rxjs/operators";
-import * as fromAuthFeature from "../store";
-import { mergeUserWithDbUserRecord } from "../../shared/utils";
-import { Store } from "@ngrx/store";
+  updateProfile,
+} from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { assign } from 'lodash';
+import { filter, take } from 'rxjs/operators';
+import * as fromAuthFeature from '../store';
+import { mergeUserWithDbUserRecord } from '../../shared/utils';
+import { Store } from '@ngrx/store';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  constructor(
+    private auth: AngularFireAuth,
+    private afs: AngularFirestore,
+    private store: Store
+  ) {}
 
-  constructor(private auth: AngularFireAuth, private afs: AngularFirestore, private store: Store) {
-  }
-
-  private static getProvider(providerType: AuthProviderType): firebase.auth.AuthProvider {
+  private static getProvider(
+    providerType: AuthProviderType
+  ): firebase.auth.AuthProvider {
     let provider: firebase.auth.AuthProvider;
 
     switch (providerType) {
@@ -46,38 +50,52 @@ export class AuthService {
     return provider;
   }
 
-  public static transformAuthProviderType(providerType: AuthProviderType | AuthProviderType[]): string | string[] {
+  public static transformAuthProviderType(
+    providerType: AuthProviderType | AuthProviderType[]
+  ): string | string[] {
     const transform = (type: AuthProviderType): string => {
       switch (type) {
         case AuthProviderType.GOOGLE:
-          return 'Google'
+          return 'Google';
         case AuthProviderType.FACEBOOK:
-          return 'Facebook'
+          return 'Facebook';
         case AuthProviderType.PASSWORD:
-          return 'Email'
+          return 'Email';
         case AuthProviderType.GITHUB:
-          return 'Github'
+          return 'Github';
         default:
-          return ''
+          return '';
       }
-    }
+    };
 
     return Array.isArray(providerType)
-      ? providerType.map(type => transform(type))
-      : transform(providerType)
+      ? providerType.map((type) => transform(type))
+      : transform(providerType);
   }
 
-  public signUp(email: string, password: string): Observable<firebase.auth.UserCredential> {
-    return fromPromise(this.auth.createUserWithEmailAndPassword(email, password));
+  public signUp(
+    email: string,
+    password: string
+  ): Observable<firebase.auth.UserCredential> {
+    return fromPromise(
+      this.auth.createUserWithEmailAndPassword(email, password)
+    );
   }
 
-  public loginWithEmail(email: string, password: string): Observable<firebase.auth.UserCredential> {
+  public loginWithEmail(
+    email: string,
+    password: string
+  ): Observable<firebase.auth.UserCredential> {
     return fromPromise(this.auth.signInWithEmailAndPassword(email, password));
   }
 
-  public loginWithProvider(providerType: AuthProviderType): Observable<firebase.auth.UserCredential> {
+  public loginWithProvider(
+    providerType: AuthProviderType
+  ): Observable<firebase.auth.UserCredential> {
     const provider = AuthService.getProvider(providerType);
-    return !!provider ? fromPromise(signInWithPopup(getAuth(), provider)) : of(null);
+    return !!provider
+      ? fromPromise(signInWithPopup(getAuth(), provider))
+      : of(null);
   }
 
   public logout(): Observable<void> {
@@ -86,12 +104,15 @@ export class AuthService {
 
   public linkAnotherAccount(
     providerType: AuthProviderType,
-    emailCredentials?: { email: string, password: string }
+    emailCredentials?: { email: string; password: string }
   ): Observable<firebase.auth.UserCredential> {
     const auth = getAuth();
 
     if (providerType === AuthProviderType.PASSWORD) {
-      const credential = EmailAuthProvider.credential(emailCredentials.email, emailCredentials.password);
+      const credential = EmailAuthProvider.credential(
+        emailCredentials.email,
+        emailCredentials.password
+      );
       // @ts-ignore
       return fromPromise(linkWithCredential(auth.currentUser, credential));
     }
@@ -101,8 +122,9 @@ export class AuthService {
     return fromPromise(linkWithPopup(auth.currentUser, provider));
   }
 
-
-  public unlinkAnotherAccount(providerType: AuthProviderType): Observable<firebase.User> {
+  public unlinkAnotherAccount(
+    providerType: AuthProviderType
+  ): Observable<firebase.User> {
     const auth = getAuth();
     // @ts-ignore
     return fromPromise(unlink(auth.currentUser, providerType));
@@ -112,12 +134,19 @@ export class AuthService {
     return fromPromise(this.auth.sendPasswordResetEmail(email));
   }
 
-  public resetPassword(accessToken: string, newPassword: string): Observable<void> {
-    return fromPromise(this.auth.confirmPasswordReset(accessToken, newPassword))
+  public resetPassword(
+    accessToken: string,
+    newPassword: string
+  ): Observable<void> {
+    return fromPromise(
+      this.auth.confirmPasswordReset(accessToken, newPassword)
+    );
   }
 
   public getAccountProviders(email: string): Observable<AuthProviderType[]> {
-    return fromPromise(this.auth.fetchSignInMethodsForEmail(email)) as Observable<AuthProviderType[]>
+    return fromPromise(
+      this.auth.fetchSignInMethodsForEmail(email)
+    ) as Observable<AuthProviderType[]>;
   }
 
   public saveUserDataToDb(user: User) {
@@ -128,31 +157,38 @@ export class AuthService {
 
   public getUserFromDb(id: string): Observable<User> {
     const userDoc = this.afs.doc<User>(`users/${id}`);
-    return userDoc.valueChanges().pipe(take(1))
+    return userDoc.valueChanges();
   }
 
-  public mergeAndSaveUser(user: User): void {
+  public mergeAndSaveUser(user: User, locallyOnly: boolean = false): void {
     this.getUserFromDb(user.id)
       .pipe(
         take(1),
-        filter(res => !!res)
+        filter((res) => !!res)
       )
       .subscribe(
-        dbUser => this.store.dispatch(fromAuthFeature.saveUserToDb({user: mergeUserWithDbUserRecord(user, dbUser)})),
-        err => console.log("mergeAndSaveUser error", err)
-      )
+        (dbUser) => {
+          const mergedUser = mergeUserWithDbUserRecord(user, dbUser);
+          this.store.dispatch(
+            locallyOnly
+              ? fromAuthFeature.updateCurrentUser({ user: mergedUser })
+              : fromAuthFeature.saveUserToDb({ user: mergedUser })
+          );
+        },
+        (err) => console.log('mergeAndSaveUser error', err)
+      );
   }
 
   public updateUserInFirebaseAuthStore(user: User) {
     const auth = getAuth();
-    fromPromise(updateProfile(auth.currentUser, {
-      displayName: user.displayName,
-      photoURL: user.photoUrl
-    })).subscribe(
+    fromPromise(
+      updateProfile(auth.currentUser, {
+        displayName: user.displayName,
+        photoURL: user.photoUrl,
+      })
+    ).subscribe(
       () => null,
-      err => console.log('updateUserInFirebaseAuthStore error', err)
-    )
+      (err) => console.log('updateUserInFirebaseAuthStore error', err)
+    );
   }
 }
-
-
