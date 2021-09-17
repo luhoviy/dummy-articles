@@ -11,7 +11,8 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "e2e:ci": "start-server-and-test start http://localhost:4200 cypress:run",
-    "refactor": "pretty-quick --staged"
+    "refactor": "pretty-quick --staged",
+    "prepare": "husky install"
   },
   "private": true,
   "dependencies": {
@@ -67,11 +68,7 @@
     "pretty-quick": "^3.1.1",
     "start-server-and-test": "^1.14.0",
     "tslint": "^6.1.3",
-    "typescript": "~4.3.5"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "run-s refactor"
-    }
+    "typescript": "~4.3.5",
+    "husky": "^7.0.0"
   }
 }
