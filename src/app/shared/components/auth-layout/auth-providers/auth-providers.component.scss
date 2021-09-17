@@ -1,0 +1,36 @@
+@import "src/app/shared/variables";
+
+.providers-container {
+  &__lines-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    color: $light-grey;
+
+    &::before,
+    &::after {
+      content: "";
+      flex: 1 1 auto;
+      border-bottom: solid 1px $light-grey;
+    }
+
+    span {
+      flex: 0 1 auto;
+      padding: 0 15px 0 15px;
+    }
+  }
+
+  &__providers {
+    button {
+      img {
+        user-select: none;
+        pointer-events: none;
+      }
+
+      &[disabled] {
+        opacity: 0.4;
+      }
+    }
+  }
+}

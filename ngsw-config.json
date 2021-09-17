@@ -13,9 +13,7 @@
           "/*.css",
           "/*.js"
         ],
-        "urls": [
-          "https://fonts.googleapis.com/**"
-        ]
+        "urls": ["https://fonts.googleapis.com", "https://fonts.gstatic.com"]
       }
     },
     {
@@ -29,5 +27,6 @@
         ]
       }
     }
-  ]
+  ],
+  "navigationUrls": ["/**", "!/__/auth/**"]
 }

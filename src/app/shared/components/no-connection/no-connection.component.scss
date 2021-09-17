@@ -1,0 +1,9 @@
+@import "src/app/shared/variables";
+
+.no-connection-container {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: $grey-bg;
+}

@@ -1,0 +1,10 @@
+<h2 text-center>{{data.title}}</h2>
+
+<p text-center class="mat-body" *ngIf="!!data.description">
+  {{data.description}}
+</p>
+
+<div class="mt-1" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1rem">
+  <button mat-stroked-button color="warn" (click)="closeModal(false)">{{data.cancelButtonText}}</button>
+  <button mat-raised-button color="primary" (click)="closeModal(true)">{{data.confirmButtonText}}</button>
+</div>

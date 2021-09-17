@@ -1,0 +1,160 @@
+<app-auth-layout image="sign-up">
+  <div h-100 fxLayout="column">
+    <div
+      fxFlex
+      fxLayoutAlign="center center"
+      class="form-container mt-1 mb-1"
+    >
+      <mat-card fxFlex="45" fxFlex.lt-sm="90" fxFlex.lt-md="60" fxFlex.md="85">
+        <h1 class="m-0">Get started today</h1>
+        <p class="m-0">Enter your details to create account.</p>
+
+        <form
+          [formGroup]="form"
+          (ngSubmit)="signUp()"
+          autocomplete="on"
+          class="form-container__form mt-2"
+          fxLayout="column"
+          fxLayoutGap="0.5rem"
+        >
+          <p class="mat-caption">* required fields</p>
+
+          <ng-template
+            #errorsTemplate
+            let-controlName="controlName"
+            let-errorTypes="errorTypes"
+            let-isFirstName="isFirstName"
+          >
+            <ng-container *ngFor="let type of errorTypes">
+              <ng-container *ngIf="form.get(controlName).hasError(type)" [ngSwitch]="type">
+                <ng-container *ngSwitchCase="'email'">
+                  Invalid email address
+                </ng-container>
+                <ng-container *ngSwitchCase="'minlength'">
+                  {{isFirstName ? 'Please enter a valid name' : 'Password should contain at least 6 symbols'}}
+                </ng-container>
+                <ng-container *ngSwitchCase="'required'">
+                  This field is required
+                </ng-container>
+                <ng-container *ngSwitchCase="'passwordsNotEqual'">
+                  Passwords do not match
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </ng-template>
+
+          <div w-100 fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="1rem" fxLayoutGap.lt-lg="0.5rem">
+            <mat-form-field w-100 appearance="fill">
+              <mat-label>First Name</mat-label>
+              <input
+                name="firstName"
+                type="text"
+                matInput
+                formControlName="firstName"
+                required
+                placeholder="Enter your first name"
+              />
+              <mat-icon matSuffix>badge</mat-icon>
+              <mat-error>
+                <ng-container
+                  [ngTemplateOutlet]="errorsTemplate"
+                  [ngTemplateOutletContext]="{ controlName: 'firstName', errorTypes: ['minlength', 'required'], isFirstName: true }"
+                ></ng-container>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field w-100 appearance="fill">
+              <mat-label>Last Name</mat-label>
+              <input
+                name="lastName"
+                type="text"
+                matInput
+                formControlName="lastName"
+                placeholder="Enter your last name"
+              />
+              <mat-icon matSuffix>badge</mat-icon>
+            </mat-form-field>
+          </div>
+
+
+          <mat-form-field w-100 appearance="fill">
+            <mat-label>Email address</mat-label>
+            <input
+              name="email"
+              autocomplete="on"
+              type="email"
+              matInput
+              formControlName="email"
+              required
+              placeholder="Enter you email address"
+            />
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error>
+              <ng-container
+                [ngTemplateOutlet]="errorsTemplate"
+                [ngTemplateOutletContext]="{ controlName: 'email', errorTypes: ['email', 'required'] }"
+              ></ng-container>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field w-100 appearance="fill">
+            <mat-label>Password</mat-label>
+            <input
+              name="password"
+              autocomplete="on"
+              type="password"
+              matInput
+              formControlName="password"
+              required
+              placeholder="Enter your password"
+            />
+            <mat-icon matSuffix>vpn_key</mat-icon>
+            <mat-error>
+              <ng-container
+                [ngTemplateOutlet]="errorsTemplate"
+                [ngTemplateOutletContext]="{ controlName: 'password', errorTypes: ['minlength', 'required'] }"
+              ></ng-container>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field w-100 appearance="fill">
+            <mat-label>Confirm Password</mat-label>
+            <input
+              name="passwordConfirm"
+              autocomplete="new-password"
+              type="password"
+              matInput
+              formControlName="passwordConfirmation"
+              placeholder="Confirm your password"
+            />
+            <mat-icon matSuffix>vpn_key</mat-icon>
+            <mat-error>
+              <ng-container
+                [ngTemplateOutlet]="errorsTemplate"
+                [ngTemplateOutletContext]="{ controlName: 'passwordConfirmation', errorTypes: ['minlength', 'required', 'passwordsNotEqual'] }"
+              ></ng-container>
+            </mat-error>
+          </mat-form-field>
+
+          <button
+            [disabled]="
+              form.pristine || form.invalid || !(isNetworkOnline$ | async)
+            "
+            mat-raised-button
+            type="submit"
+            color="primary"
+          >
+            <span class="mat-h3">Get started now</span>
+          </button>
+        </form>
+
+        <app-auth-providers></app-auth-providers>
+      </mat-card>
+    </div>
+
+    <p w-100 class="pb-1 m-0" text-center>
+      Already have an account?
+      <span routerLink="/login" link>Login</span>
+    </p>
+  </div>
+</app-auth-layout>

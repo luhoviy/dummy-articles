@@ -1,0 +1,36 @@
+<div class="providers-container pt-1">
+  <div class="providers-container__lines-wrapper">
+    <span>Or continue with</span>
+  </div>
+
+  <div
+    class="providers-container__providers mt-1"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    fxLayoutGap="1rem"
+  >
+    <button
+      [disabled]="!isNetworkOnline"
+      (click)="loginWithProvider(AuthProviderType.GOOGLE)"
+      mat-raised-button
+    >
+      <img src="assets/icons/google.png" alt="google" />
+    </button>
+
+    <button
+      [disabled]="!isNetworkOnline"
+      (click)="loginWithProvider(AuthProviderType.GITHUB)"
+      mat-raised-button
+    >
+      <img src="assets/icons/github.png" alt="github" />
+    </button>
+
+    <button
+      [disabled]="!isNetworkOnline"
+      (click)="loginWithProvider(AuthProviderType.FACEBOOK)"
+      mat-raised-button
+    >
+      <img src="assets/icons/facebook.png" alt="facebook" />
+    </button>
+  </div>
+</div>
