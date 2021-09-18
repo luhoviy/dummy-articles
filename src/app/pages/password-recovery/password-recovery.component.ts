@@ -1,11 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import firebase from 'firebase/compat';
 import { isEmpty } from 'lodash';
 import { Observable, timer } from 'rxjs';
-import { filter, finalize, map, scan, take, takeUntil, takeWhile, tap, withLatestFrom } from 'rxjs/operators';
+import {
+  filter,
+  finalize,
+  map,
+  scan,
+  take,
+  takeUntil,
+  takeWhile,
+  tap,
+  withLatestFrom,
+} from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../authentication/services/auth.service';
 import { AuthProviderType, User } from '../../authentication/shared/auth.model';
@@ -13,9 +28,9 @@ import * as fromAuthFeature from '../../authentication/store';
 import { ClearObservable } from '../../shared/components/clear-observable.component';
 import { NotificationsService } from '../../shared/services/notifications.service';
 import { getNetworkOnlineState } from '../../store/selectors/network.selectors';
-import { matchPasswordsValidator } from "../../shared/utils";
-import { ConfirmationDialogService } from "../../shared/components/confirmation-dialog/confirmation-dialog.service";
-import { ConfirmDialogData } from "../../shared/components/confirmation-dialog/confirmation-dialog.model";
+import { matchPasswordsValidator } from '../../shared/utils';
+import { ConfirmationDialogService } from '../../shared/components/confirmation-dialog/confirmation-dialog.service';
+import { ConfirmDialogData } from '../../shared/components/confirmation-dialog/confirmation-dialog.model';
 
 @Component({
   selector: 'app-password-recovery',
@@ -24,7 +39,8 @@ import { ConfirmDialogData } from "../../shared/components/confirmation-dialog/c
 })
 export class PasswordRecoveryComponent
   extends ClearObservable
-  implements OnInit {
+  implements OnInit
+{
   isNetworkOnline$: Observable<boolean> = this.store.select(
     getNetworkOnlineState
   );
@@ -62,7 +78,7 @@ export class PasswordRecoveryComponent
         takeUntil(this.destroy$)
       )
       .subscribe((params) => {
-        const {mode, apiKey, oobCode, email} = params;
+        const { mode, apiKey, oobCode, email } = params;
         if (
           mode === 'resetPassword' &&
           apiKey === environment.firebaseConfig.apiKey &&
@@ -107,7 +123,7 @@ export class PasswordRecoveryComponent
     }
   }
 
-  async sendResetPasswordEmail(startCountDown: boolean = false): Promise<void> {
+  public sendResetPasswordEmail(startCountDown: boolean = false): void {
     this.isLoading = true;
 
     this.authService
@@ -133,10 +149,17 @@ export class PasswordRecoveryComponent
 
     if (this.targetEmailAddress) {
       try {
-        const associatedProviders = await this.authService.getAccountProviders(this.targetEmailAddress).toPromise();
-        if (associatedProviders.filter(type => type !== AuthProviderType.PASSWORD).length) {
+        const associatedProviders = await this.authService
+          .getAccountProviders(this.targetEmailAddress)
+          .toPromise();
+        if (
+          associatedProviders.filter(
+            (type) => type !== AuthProviderType.PASSWORD
+          ).length
+        ) {
           const config = new ConfirmDialogData();
-          config.description = 'All accounts connected using other authentication providers will be automatically removed from your account.'
+          config.description =
+            'All accounts connected using other authentication providers will be automatically removed from your account.';
           config.confirmButtonText = 'Yes, I understand';
           const confirmed = await this.confirmDialog.open(config).toPromise();
           if (!confirmed) {
@@ -145,11 +168,11 @@ export class PasswordRecoveryComponent
           }
         }
       } catch (error) {
-        console.log("password change confirmation error", error);
+        console.log('password change confirmation error', error);
       }
     }
 
-    const {password} = this.passwordsForm.value;
+    const { password } = this.passwordsForm.value;
     this.authService
       .resetPassword(this.accessToken, password)
       .pipe(
@@ -207,7 +230,7 @@ export class PasswordRecoveryComponent
   private startCountDown(): void {
     timer(0, 1000)
       .pipe(
-        scan((acc) => --acc, 10),
+        scan((acc) => --acc, 60),
         takeWhile((sec) => sec >= 0),
         takeUntil(this.destroy$)
       )
