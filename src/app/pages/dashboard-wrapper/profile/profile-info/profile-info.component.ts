@@ -51,7 +51,6 @@ export class ProfileInfoComponent extends ClearObservable implements OnInit {
       .afterClosed()
       .pipe(take(1), takeUntil(this.destroy$))
       .subscribe((modifiedUser: User | null) => {
-        console.log(modifiedUser);
         if (!!modifiedUser) {
           this.store.dispatch(
             saveUserToDb({ user: modifiedUser, setLoadingState: true })

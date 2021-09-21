@@ -22,7 +22,7 @@
 
   <button
     class="dashboard-header__menu-btn"
-    [fxHide]="isDesktop"
+    *ngIf="!isDesktop"
     mat-icon-button
     (click)="sideNav.toggle()"
   >
