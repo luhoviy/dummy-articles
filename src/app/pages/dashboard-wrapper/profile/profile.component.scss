@@ -1,0 +1,9 @@
+@import "src/app/shared/variables";
+
+.primary-tooltip {
+  font-size: 0.8rem;
+  background-color: $primary-color;
+  color: $light-grey;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.64);
+  margin: 5px !important;
+}

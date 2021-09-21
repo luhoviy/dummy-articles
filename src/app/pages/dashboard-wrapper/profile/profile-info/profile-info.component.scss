@@ -1,0 +1,11 @@
+@import "src/app/shared/variables";
+
+.profile-info-wrapper {
+  &__info-list {
+    .mat-list-item {
+      .mat-icon {
+        color: $light-grey;
+      }
+    }
+  }
+}

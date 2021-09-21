@@ -34,10 +34,12 @@
     "@ngrx/store-devtools": "^12.4.0",
     "firebase": "^9.0.2",
     "lodash": "^4.17.21",
+    "moment": "^2.29.1",
     "ngx-spinner": "^12.0.0",
     "rxfire": "^6.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
+    "validator": "^13.6.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -49,10 +51,12 @@
     "@types/jasmine": "~3.8.0",
     "@types/lodash": "^4.14.172",
     "@types/node": "^12.11.1",
+    "@types/validator": "^13.6.3",
     "codelyzer": "^6.0.2",
     "cypress": "8.3.1",
     "firebase-tools": "^9.0.0",
     "fuzzy": "^0.1.3",
+    "husky": "^7.0.0",
     "inquirer": "^6.2.2",
     "inquirer-autocomplete-prompt": "^1.0.1",
     "jasmine-core": "~3.8.0",
@@ -68,7 +72,6 @@
     "pretty-quick": "^3.1.1",
     "start-server-and-test": "^1.14.0",
     "tslint": "^6.1.3",
-    "typescript": "~4.3.5",
-    "husky": "^7.0.0"
+    "typescript": "~4.3.5"
   }
 }

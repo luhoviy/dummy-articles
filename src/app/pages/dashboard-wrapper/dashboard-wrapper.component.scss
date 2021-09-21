@@ -1,0 +1,75 @@
+@import "src/app/shared/variables";
+
+.dashboard-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 72px;
+  z-index: 999;
+  background-color: $primary-color;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.64);
+
+  &__logo {
+    color: $text-light;
+    text-decoration: none;
+
+    .mat-icon {
+      font-size: 2rem;
+      height: 2rem;
+      width: 2rem;
+    }
+
+    span {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__profile-btn,
+  &__menu-btn {
+    color: $text-light;
+  }
+
+  &__profile-btn {
+    padding-left: 0;
+    border-radius: 40px;
+
+    &__display-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.main-container {
+  height: calc(100vh - 72px);
+  margin-top: 72px;
+  background-color: $grey-bg;
+
+  &__nav-list {
+    box-shadow: 1px 0 3px 0 rgba(0, 0, 0, 0.24);
+
+    [mat-list-item] {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: $light-grey;
+
+      &.active {
+        position: relative;
+        color: $primary-color;
+
+        &::after {
+          content: "";
+          position: absolute;
+          width: 5px;
+          height: 5px;
+          border-radius: 100%;
+          background-color: $primary-color;
+          opacity: 0.8;
+          right: 1rem;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+}

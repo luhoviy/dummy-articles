@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import * as fromAuthFeature from '../../authentication/store';
 import { ClearObservable } from '../../shared/components/clear-observable.component';
 import { getNetworkOnlineState } from '../../store/selectors/network.selectors';
+import { emailValidator } from '../../shared/utils';
 
 @Component({
   selector: 'app-login',
@@ -43,7 +44,7 @@ export class LoginComponent extends ClearObservable implements OnInit {
 
   private initForm(): void {
     this.form = this.fb.group({
-      email: ['', [Validators.email, Validators.required]],
+      email: ['', [Validators.required, emailValidator]],
       password: ['', [Validators.minLength(6), Validators.required]],
     });
   }

@@ -1,1 +1,38 @@
-<p>profile works!</p>
+<mat-tab-group
+  mat-stretch-tabs
+  dynamicHeight
+  (selectedIndexChange)="selectedTabIndex = $event"
+  class="example-stretched-tabs mat-elevation-z4"
+>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-05">assignment</mat-icon>
+      Profile Info
+    </ng-template>
+
+    <ng-container *ngIf="!selectedTabIndex">
+      <app-profile-info [user]="user"></app-profile-info>
+    </ng-container>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-05">portrait</mat-icon>
+      Profile Photo
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-05">vpn_key</mat-icon>
+      Password
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-05">groups</mat-icon>
+      Linked accounts
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

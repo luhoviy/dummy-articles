@@ -9,7 +9,7 @@ import { isEmpty } from 'lodash';
 import { AuthProviderType } from './authentication/shared/auth.model';
 import { AuthService } from './authentication/services/auth.service';
 import { ParseFirebaseErrorMessage } from './shared/utils';
-import { Store } from "@ngrx/store";
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class AppEffects {
@@ -17,16 +17,15 @@ export class AppEffects {
     private notifications: NotificationsService,
     private actions$: Actions,
     private store: Store
-  ) {
-  }
+  ) {}
 
   observeNetworkState$ = createEffect(() =>
     merge(fromEvent(window, 'online'), fromEvent(window, 'offline')).pipe(
-      map((event) => updateNetworkState({isOnline: event.type === 'online'}))
+      map((event) => updateNetworkState({ isOnline: event.type === 'online' }))
     )
   );
 
-  showFirebaseErrors$ = createEffect(
+  displayFirebaseErrors$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(
@@ -62,7 +61,9 @@ export class AppEffects {
                     accountProviders
                   ) as string[]
                 ).join(' or');
-                alertConfig.text = `This account does not have a password, please login using ${providersAsString} authentication provider${accountProviders.length > 1 ? 's' : ''} to set a password.`;
+                alertConfig.text = `This account does not have a password, please login using ${providersAsString} authentication provider${
+                  accountProviders.length > 1 ? 's' : ''
+                } to set a password.`;
                 alertConfig.duration = 0;
                 alertConfig.showButton = true;
                 alertConfig.buttonText = 'Got It';
@@ -73,21 +74,24 @@ export class AppEffects {
               alertConfig.showButton = true;
               alertConfig.duration = 0;
               showAsNotification = true;
-              this.store.dispatch(fromAuthFeature.logout())
+              this.store.dispatch(fromAuthFeature.logout());
               break;
             case 'auth/account-exists-with-different-credential':
               alertConfig.showButton = true;
               alertConfig.duration = 0;
+              break;
+            case 'auth/popup-closed-by-user':
+              alertConfig.text = null;
               break;
           }
 
           if (!!alertConfig.text) {
             const alertProps = Object.values(alertConfig);
             showAsNotification
-              // @ts-ignore
-              ? this.notifications.notification(...alertProps)
-              // @ts-ignore
-              : this.notifications.error(...alertProps);
+              ? // @ts-ignore
+                this.notifications.notification(...alertProps)
+              : // @ts-ignore
+                this.notifications.error(...alertProps);
           }
         })
       ),

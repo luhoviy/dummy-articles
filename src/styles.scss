@@ -21,7 +21,6 @@ $my-custom-typography: mat.define-typography-config(
 
 html,
 body {
-  height: 100%;
   background-color: $grey-bg;
 }
 
@@ -70,7 +69,8 @@ body {
   }
 
   [link] {
-    color: $link-color;
+    text-decoration: none;
+    color: $primary-color;
 
     &:hover {
       text-decoration: underline;
@@ -184,6 +184,89 @@ body {
     border-radius: 10px;
   }
 
+  // Shared elements
+
+  form {
+    font-size: 0.9rem;
+
+    .mat-caption,
+    .mat-form-field-suffix {
+      .mat-icon {
+        color: $light-grey;
+
+        &.action {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    transition: background-color 9999s ease-in-out 0s, color 9999s ease-out;
+  }
+
+  [imageSkeletonWrapper] {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+
+    &.responsive {
+      padding-bottom: 56.25%;
+      height: 0;
+    }
+
+    &:not(.loaded) {
+      background: linear-gradient(
+        to right,
+        #383838 0%,
+        #74747481 30%,
+        #a09d9d85 60%,
+        #383838 100%
+      );
+      background-size: 400%;
+      background-position: left;
+      animation: load 1s ease-in-out 0s infinite alternate;
+
+      @keyframes load {
+        0% {
+          background-position: right;
+        }
+
+        100% {
+          background-position: left;
+        }
+      }
+
+      img {
+        visibility: hidden;
+        opacity: 0;
+      }
+    }
+
+    &.loaded {
+      img {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      user-select: none;
+      object-fit: cover;
+      object-position: center;
+      transition: opacity 0.5s ease-out;
+    }
+  }
+
   // Snackbars
 
   .mat-snack-bar-container {
@@ -213,13 +296,6 @@ body {
   }
 
   // Material
-
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active {
-    transition: background-color 9999s ease-in-out 0s, color 9999s ease-out;
-  }
 
   .mat-progress-spinner {
     &.grey {

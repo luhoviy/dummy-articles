@@ -1,10 +1,6 @@
 <app-auth-layout image="login">
   <div h-100 fxLayout="column" fxLayoutAlign="start space-between">
-    <div
-      fxFlex
-      fxLayoutAlign="center center"
-      class="form-container"
-    >
+    <div fxFlex="grow" fxLayoutAlign="center center">
       <mat-card fxFlex="45" fxFlex.lt-sm="90" fxFlex.lt-md="60" fxFlex.md="85">
         <h1 class="m-0">Welcome back</h1>
         <p>Sign in to manage your account.</p>
@@ -64,7 +60,9 @@
             </mat-error>
           </mat-form-field>
 
-          <p link routerLink="/password-recovery">Forgot your password?</p>
+          <a class="mb-05" link routerLink="/password-recovery"
+            >Forgot your password?</a
+          >
 
           <button
             [disabled]="
@@ -85,7 +83,7 @@
 
     <p w-100 text-center class="pb-1 m-0">
       Don't have account?
-      <span routerLink="/sign-up" link>Sign Up</span>
+      <a routerLink="/sign-up" link>Sign Up</a>
     </p>
   </div>
 </app-auth-layout>
