@@ -38,6 +38,7 @@
           </div>
 
           <mat-slide-toggle
+            color="primary"
             (change)="applySuggestedPhoto(provider.photoURL, $event)"
             [checked]="newPhotoUrl === provider.photoURL"
           >
