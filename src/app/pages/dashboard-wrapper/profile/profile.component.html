@@ -11,7 +11,7 @@
     </ng-template>
 
     <ng-container *ngIf="!selectedTabIndex">
-      <app-profile-info [user]="user"></app-profile-info>
+      <app-profile-info></app-profile-info>
     </ng-container>
   </mat-tab>
 
@@ -20,6 +20,10 @@
       <mat-icon class="mr-05">portrait</mat-icon>
       Profile Photo
     </ng-template>
+
+    <ng-container *ngIf="selectedTabIndex === 1">
+      <app-profile-photo></app-profile-photo>
+    </ng-container>
   </mat-tab>
 
   <mat-tab>
@@ -34,5 +38,9 @@
       <mat-icon class="mr-05">groups</mat-icon>
       Linked accounts
     </ng-template>
+
+    <ng-container *ngIf="selectedTabIndex === 3">
+      <app-linked-accounts></app-linked-accounts>
+    </ng-container>
   </mat-tab>
 </mat-tab-group>

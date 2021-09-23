@@ -1,0 +1,71 @@
+<div
+  h-100
+  class="p-1"
+  fxLayout.xs="column"
+  fxLayout="row"
+  fxLayoutGap="1rem"
+  fxLayoutAlign="start start"
+>
+  <mat-card w-100 fxFlex.gt-xs="45">
+    <img
+      no-pointer
+      w-100
+      [src]="!!newPhotoUrl ? newPhotoUrl : user.photoUrl"
+      alt="avatar"
+    />
+  </mat-card>
+
+  <mat-card w-100 fxFlex.gt-xs="55">
+    <h2 class="m-0">Change your profile photo</h2>
+
+    <app-file-uploader
+      [showDropzone]="isDesktop"
+      (fileUploaded)="newPhotoUrl = $event; uploadedPhotoPath = $event"
+    ></app-file-uploader>
+
+    <mat-card
+      fxLayout="column"
+      fxLayoutGap="2rem"
+      class="mt-1"
+      *ngIf="providers.length"
+    >
+      <h4>Suggested photos</h4>
+
+      <div relative *ngFor="let provider of providers; last as isLast">
+        <div fxLayoutAlign="space-between center" w-100>
+          <div imageSkeletonWrapper [size]="5">
+            <img [src]="provider.photoURL" [attr.alt]="provider.displayName" />
+          </div>
+
+          <mat-slide-toggle
+            (change)="applySuggestedPhoto(provider.photoURL, $event)"
+            [checked]="newPhotoUrl === provider.photoURL"
+          >
+            Use as profile photo
+          </mat-slide-toggle>
+        </div>
+
+        <mat-divider class="mt-1" *ngIf="!isLast"></mat-divider>
+      </div>
+    </mat-card>
+
+    <div fxLayoutGap="1rem" class="mt-1" fxLayoutAlign="end center">
+      <button
+        (click)="newPhotoUrl = null; uploadedPhotoPath = null"
+        *ngIf="!!newPhotoUrl"
+        mat-raised-button
+        color="warn"
+      >
+        Cancel
+      </button>
+      <button
+        (click)="save()"
+        [disabled]="!newPhotoUrl"
+        mat-raised-button
+        color="primary"
+      >
+        Save
+      </button>
+    </div>
+  </mat-card>
+</div>

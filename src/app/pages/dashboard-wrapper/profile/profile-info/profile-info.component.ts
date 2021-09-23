@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from '../../../../authentication/shared/auth.model';
 import { MatDialog } from '@angular/material/dialog';
 import { UserInfoFormComponent } from '../../../../shared/components/user-info-form/user-info-form.component';
@@ -17,7 +17,7 @@ import { getNetworkOnlineState } from '../../../../store/selectors/network.selec
   styleUrls: ['./profile-info.component.scss'],
 })
 export class ProfileInfoComponent extends ClearObservable implements OnInit {
-  @Input() user: User;
+  user: User;
   isNetworkOnline$: Observable<boolean> = this.store.select(
     getNetworkOnlineState
   );
@@ -32,11 +32,16 @@ export class ProfileInfoComponent extends ClearObservable implements OnInit {
 
   ngOnInit() {
     this.store
+      .select(fromAuthFeature.getCurrentUser)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((user) => (this.user = user));
+
+    this.store
       .select(fromAuthFeature.getIsAuthLoading)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((isLoading) => {
-        isLoading ? this.spinner.show() : this.spinner.hide();
-      });
+      .subscribe((isLoading) =>
+        isLoading ? this.spinner.show() : this.spinner.hide()
+      );
   }
 
   public openEditModal(): void {

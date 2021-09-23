@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
+import { FileUploaderService } from './shared/services/file-uploader.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,10 @@ import { SwUpdate } from '@angular/service-worker';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(private serviceWorkerUpdates: SwUpdate) {
+  constructor(
+    private serviceWorkerUpdates: SwUpdate,
+    public fileUploader: FileUploaderService
+  ) {
     if (this.serviceWorkerUpdates.isEnabled) {
       this.serviceWorkerUpdates.available.subscribe(async () => {
         try {
