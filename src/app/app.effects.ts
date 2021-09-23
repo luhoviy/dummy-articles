@@ -60,7 +60,7 @@ export class AppEffects {
                   AuthService.transformAuthProviderType(
                     accountProviders
                   ) as string[]
-                ).join(' or');
+                ).join(' or ');
                 alertConfig.text = `This account does not have a password, please login using ${providersAsString} authentication provider${
                   accountProviders.length > 1 ? 's' : ''
                 } to set a password.`;
