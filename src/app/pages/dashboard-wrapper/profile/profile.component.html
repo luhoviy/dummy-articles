@@ -31,6 +31,10 @@
       <mat-icon class="mr-05">vpn_key</mat-icon>
       Password
     </ng-template>
+
+    <ng-container *ngIf="selectedTabIndex === 2">
+      <app-user-password></app-user-password>
+    </ng-container>
   </mat-tab>
 
   <mat-tab>

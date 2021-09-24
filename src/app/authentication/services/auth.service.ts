@@ -3,14 +3,16 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import firebase from 'firebase/compat/app';
 import { Observable, of } from 'rxjs';
-import { AuthProviderType, User } from '../shared/auth.model';
+import { AuthProviderType, EmailCredentials, User } from '../shared/auth.model';
 import {
   EmailAuthProvider,
   getAuth,
   linkWithCredential,
   linkWithPopup,
+  reauthenticateWithCredential,
   signInWithPopup,
   unlink,
+  updatePassword,
   updateProfile,
 } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -104,7 +106,7 @@ export class AuthService {
 
   public linkAnotherAccount(
     providerType: AuthProviderType,
-    emailCredentials?: { email: string; password: string }
+    emailCredentials?: EmailCredentials
   ): Observable<firebase.auth.UserCredential> {
     const auth = getAuth();
 
@@ -141,6 +143,25 @@ export class AuthService {
     return fromPromise(
       this.auth.confirmPasswordReset(accessToken, newPassword)
     );
+  }
+
+  public verifyCurrentPassword(
+    emailCredentials: EmailCredentials
+  ): Observable<firebase.auth.UserCredential> {
+    const auth = getAuth();
+    const credential = EmailAuthProvider.credential(
+      emailCredentials.email,
+      emailCredentials.password
+    );
+    // @ts-ignore
+    return fromPromise(
+      reauthenticateWithCredential(auth.currentUser, credential)
+    );
+  }
+
+  public changeUserPassword(newPassword: string): Observable<void> {
+    const auth = getAuth();
+    return fromPromise(updatePassword(auth.currentUser, newPassword));
   }
 
   public getAccountProviders(email: string): Observable<AuthProviderType[]> {

@@ -6,6 +6,7 @@ import {
 } from '../../shared/auth.model';
 import { FirebaseError } from 'firebase/app';
 import { UserInfoFormValue } from '../../../shared/components/user-info-form/user-info-form.component';
+import { NewPasswordFormResponse } from '../../../shared/components/new-password-form/new-password-form.component';
 
 export const LOGIN_WITH_EMAIL = 'LOGIN_WITH_EMAIL';
 export const LOGIN_WITH_EMAIL_SUCCESS = 'LOGIN_WITH_EMAIL_SUCCESS';
@@ -93,6 +94,21 @@ export const unlinkAnotherAccountSuccess = createAction(
 );
 export const unlinkAnotherAccountFailure = createAction(
   UNLINK_ANOTHER_ACCOUNT_FAILURE,
+  props<{ error: FirebaseError }>()
+);
+
+export const CHANGE_USER_PASSWORD = 'CHANGE_USER_PASSWORD';
+export const CHANGE_USER_PASSWORD_SUCCESS = 'CHANGE_USER_PASSWORD_SUCCESS';
+export const CHANGE_USER_PASSWORD_FAILURE = 'CHANGE_USER_PASSWORD_FAILURE';
+export const changeUserPassword = createAction(
+  CHANGE_USER_PASSWORD,
+  props<{ passwords: NewPasswordFormResponse; email: string }>()
+);
+export const changeUserPasswordSuccess = createAction(
+  CHANGE_USER_PASSWORD_SUCCESS
+);
+export const changeUserPasswordFailure = createAction(
+  CHANGE_USER_PASSWORD_FAILURE,
   props<{ error: FirebaseError }>()
 );
 

@@ -23,19 +23,43 @@ export const mergeUserWithDbUserRecord = (user: User, dbUser: User): User => {
 // --------- Custom form validators ---------
 
 export const matchPasswordsValidator = (
-  controlName: string,
-  matchingControlName: string
+  newPasswordControlName: string,
+  matchingNewPasswordControlName: string
 ) => {
   return (formGroup: FormGroup) => {
-    const control = formGroup.controls[controlName];
-    const matchingControl = formGroup.controls[matchingControlName];
+    const newPasswordControl = formGroup.controls[newPasswordControlName];
+    const matchingControl = formGroup.controls[matchingNewPasswordControlName];
     if (matchingControl.errors && !matchingControl.errors.passwordsNotEqual)
       return;
-    if (control.value !== matchingControl.value) {
+    if (newPasswordControl.value !== matchingControl.value) {
       matchingControl.setErrors({ passwordsNotEqual: true });
       return;
     }
     matchingControl.setErrors(null);
+  };
+};
+
+export const matchingOldPasswordValidator = (
+  oldPasswordControlName: string,
+  newPasswordControlName: string
+) => {
+  return (formGroup: FormGroup) => {
+    const oldPasswordControl = formGroup.controls[oldPasswordControlName];
+    const newPasswordControl = formGroup.controls[newPasswordControlName];
+
+    if (
+      newPasswordControl.errors &&
+      !newPasswordControl.errors.newPasswordIsEqualToOld
+    )
+      return;
+    if (
+      !!oldPasswordControl.value &&
+      newPasswordControl.value === oldPasswordControl.value
+    ) {
+      newPasswordControl.setErrors({ newPasswordIsEqualToOld: true });
+      return;
+    }
+    newPasswordControl.setErrors(null);
   };
 };
 

@@ -14,6 +14,8 @@ import { ProfilePhotoComponent } from './profile-photo/profile-photo.component';
 import { FileUploaderModule } from '../../../shared/components/file-uploader/file-uploader.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { LinkedAccountsComponent } from './linked-accounts/linked-accounts.component';
+import { UserPasswordComponent } from './user-password/user-password.component';
+import { NewPasswordFormModule } from '../../../shared/components/new-password-form/new-password-form.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { LinkedAccountsComponent } from './linked-accounts/linked-accounts.compo
     ProfileInfoComponent,
     ProfilePhotoComponent,
     LinkedAccountsComponent,
+    UserPasswordComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +42,7 @@ import { LinkedAccountsComponent } from './linked-accounts/linked-accounts.compo
     MatTooltipModule,
     FileUploaderModule,
     MatSlideToggleModule,
+    NewPasswordFormModule,
   ],
 })
 export class ProfileModule {}

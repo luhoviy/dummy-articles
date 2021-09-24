@@ -4,7 +4,8 @@ import { PasswordRecoveryComponent } from './password-recovery.component';
 import { RouterModule } from '@angular/router';
 import { AuthLayoutModule } from '../../shared/components/auth-layout/auth-layout.module';
 import { MatMenuModule } from '@angular/material/menu';
-import { ConfirmationDialogModule } from "../../shared/components/confirmation-dialog/confirmation-dialog.module";
+import { ConfirmationDialogModule } from '../../shared/components/confirmation-dialog/confirmation-dialog.module';
+import { NewPasswordFormModule } from '../../shared/components/new-password-form/new-password-form.module';
 
 @NgModule({
   declarations: [PasswordRecoveryComponent],
@@ -23,8 +24,8 @@ import { ConfirmationDialogModule } from "../../shared/components/confirmation-d
     ]),
     AuthLayoutModule,
     MatMenuModule,
-    ConfirmationDialogModule
+    ConfirmationDialogModule,
+    NewPasswordFormModule,
   ],
 })
-export class PasswordRecoveryModule {
-}
+export class PasswordRecoveryModule {}

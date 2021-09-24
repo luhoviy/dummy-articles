@@ -6,14 +6,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { AuthProvidersComponent } from './auth-providers/auth-providers.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AuthLayoutComponent, AuthProvidersComponent],
   imports: [
     CommonModule,
     SharedModule,
-    FormsModule,
     ReactiveFormsModule,
     RouterModule,
     MatFormFieldModule,

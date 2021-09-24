@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import firebase from 'firebase/compat';
@@ -28,9 +23,9 @@ import * as fromAuthFeature from '../../authentication/store';
 import { ClearObservable } from '../../shared/components/clear-observable.component';
 import { NotificationsService } from '../../shared/services/notifications.service';
 import { getNetworkOnlineState } from '../../store/selectors/network.selectors';
-import { matchPasswordsValidator } from '../../shared/utils';
 import { ConfirmationDialogService } from '../../shared/components/confirmation-dialog/confirmation-dialog.service';
 import { ConfirmDialogData } from '../../shared/components/confirmation-dialog/confirmation-dialog.model';
+import { NewPasswordFormResponse } from '../../shared/components/new-password-form/new-password-form.component';
 
 @Component({
   selector: 'app-password-recovery',
@@ -45,8 +40,6 @@ export class PasswordRecoveryComponent
     getNetworkOnlineState
   );
   emailControl: FormControl;
-  passwordsForm: FormGroup;
-
   isLoading: boolean = false;
   accessToken: string = null;
   targetEmailAddress: string;
@@ -58,7 +51,6 @@ export class PasswordRecoveryComponent
     private authService: AuthService,
     private activeRoute: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder,
     private store: Store,
     private notifications: NotificationsService,
     private confirmDialog: ConfirmationDialogService
@@ -91,10 +83,6 @@ export class PasswordRecoveryComponent
   }
 
   ngOnInit() {
-    this.initControls();
-  }
-
-  private initControls(): void {
     this.emailControl = new FormControl('', [
       Validators.required,
       Validators.email,
@@ -102,24 +90,6 @@ export class PasswordRecoveryComponent
     if (this.targetEmailAddress) {
       this.emailControl.setValue(this.targetEmailAddress);
       this.emailControl.markAsDirty();
-    }
-
-    if (this.accessToken) {
-      this.passwordsForm = this.fb.group(
-        {
-          password: ['', [Validators.minLength(6), Validators.required]],
-          passwordConfirmation: [
-            '',
-            [Validators.minLength(6), Validators.required],
-          ],
-        },
-        {
-          validators: matchPasswordsValidator(
-            'password',
-            'passwordConfirmation'
-          ),
-        }
-      );
     }
   }
 
@@ -144,7 +114,7 @@ export class PasswordRecoveryComponent
       );
   }
 
-  async resetPassword(): Promise<void> {
+  async resetPassword(response: NewPasswordFormResponse): Promise<void> {
     this.isLoading = true;
 
     if (this.targetEmailAddress) {
@@ -172,9 +142,9 @@ export class PasswordRecoveryComponent
       }
     }
 
-    const { password } = this.passwordsForm.value;
+    const { newPassword } = response;
     this.authService
-      .resetPassword(this.accessToken, password)
+      .resetPassword(this.accessToken, newPassword)
       .pipe(
         withLatestFrom(this.store.select(fromAuthFeature.getCurrentUser)),
         map(([_, currentUser]) => currentUser),

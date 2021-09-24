@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserInfoFormComponent } from '../../../../shared/components/user-info-form/user-info-form.component';
 import { Store } from '@ngrx/store';
 import { ClearObservable } from '../../../../shared/components/clear-observable.component';
-import { take, takeUntil } from 'rxjs/operators';
+import { filter, take, takeUntil } from 'rxjs/operators';
 import * as fromAuthFeature from '../../../../authentication/store';
 import { saveUserToDb } from '../../../../authentication/store';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -33,7 +33,10 @@ export class ProfileInfoComponent extends ClearObservable implements OnInit {
   ngOnInit() {
     this.store
       .select(fromAuthFeature.getCurrentUser)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        filter((user) => !!user),
+        takeUntil(this.destroy$)
+      )
       .subscribe((user) => (this.user = user));
 
     this.store

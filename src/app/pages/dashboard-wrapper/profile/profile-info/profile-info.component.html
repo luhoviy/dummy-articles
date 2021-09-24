@@ -1,8 +1,12 @@
-<div class="p-1 profile-info-wrapper" fxLayoutAlign="center center">
+<div
+  *ngIf="!!user"
+  class="p-1 profile-info-wrapper"
+  fxLayoutAlign="center center"
+>
   <mat-card fxFlex="30" fxFlex.lt-lg="50" fxFlex.lt-md="70" fxFlex.xs="100">
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0.5rem">
       <div imageSkeletonWrapper [size]="15">
-        <img [src]="user.photoUrl" alt="avatar" />
+        <img [src]="user.photoUrl" alt="profile-photo" />
       </div>
       <h2 class="m-0" text-center>{{ user.displayName }}</h2>
     </div>

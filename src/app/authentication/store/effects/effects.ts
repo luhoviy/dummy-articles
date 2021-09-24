@@ -8,6 +8,7 @@ import {
   mergeMap,
   skip,
   skipWhile,
+  switchMap,
   tap,
   withLatestFrom,
 } from 'rxjs/operators';
@@ -178,6 +179,29 @@ export class AuthEffects {
     )
   );
 
+  changeUserPassword$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromAuthFeature.changeUserPassword),
+      mergeMap(({ passwords, email }) =>
+        this.authService
+          .verifyCurrentPassword({ email, password: passwords.oldPassword })
+          .pipe(
+            switchMap(() =>
+              this.authService.changeUserPassword(passwords.newPassword).pipe(
+                map(() => fromAuthFeature.changeUserPasswordSuccess()),
+                catchError((error) =>
+                  of(fromAuthFeature.changeUserPasswordFailure({ error }))
+                )
+              )
+            ),
+            catchError((error) =>
+              of(fromAuthFeature.changeUserPasswordFailure({ error }))
+            )
+          )
+      )
+    )
+  );
+
   updateCurrentUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(
@@ -221,7 +245,8 @@ export class AuthEffects {
         fromAuthFeature.SIGNUP_WITH_EMAIL,
         fromAuthFeature.LOGIN_WITH_PROVIDER,
         fromAuthFeature.LINK_ANOTHER_ACCOUNT,
-        fromAuthFeature.UNLINK_ANOTHER_ACCOUNT
+        fromAuthFeature.UNLINK_ANOTHER_ACCOUNT,
+        fromAuthFeature.CHANGE_USER_PASSWORD
       ),
       map((_) => fromAuthFeature.updateAuthLoading({ isLoading: true }))
     )
@@ -239,7 +264,9 @@ export class AuthEffects {
         fromAuthFeature.LINK_ANOTHER_ACCOUNT_SUCCESS,
         fromAuthFeature.LINK_ANOTHER_ACCOUNT_FAILURE,
         fromAuthFeature.UNLINK_ANOTHER_ACCOUNT_SUCCESS,
-        fromAuthFeature.UNLINK_ANOTHER_ACCOUNT_FAILURE
+        fromAuthFeature.UNLINK_ANOTHER_ACCOUNT_FAILURE,
+        fromAuthFeature.CHANGE_USER_PASSWORD_SUCCESS,
+        fromAuthFeature.CHANGE_USER_PASSWORD_FAILURE
       ),
       map((_) => fromAuthFeature.updateAuthLoading({ isLoading: false }))
     )

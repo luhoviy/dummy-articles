@@ -6,7 +6,7 @@ import {
   AuthProviderType,
   User,
 } from '../../../../authentication/shared/auth.model';
-import { finalize, map, take, takeUntil } from 'rxjs/operators';
+import { filter, finalize, map, take, takeUntil } from 'rxjs/operators';
 import { flatten, values } from 'lodash';
 import firebase from 'firebase/compat/app';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
@@ -46,7 +46,10 @@ export class ProfilePhotoComponent extends ClearObservable implements OnInit {
 
     this.store
       .select(fromAuthFeature.getCurrentUser)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        filter((user) => !!user),
+        takeUntil(this.destroy$)
+      )
       .subscribe((user) => {
         this.user = { ...user };
         this.providers = flatten(values(user.providersDataMap)).filter(
