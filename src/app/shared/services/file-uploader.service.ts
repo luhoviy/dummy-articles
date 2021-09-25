@@ -26,7 +26,9 @@ export class FileUploaderService {
   ): Observable<string> {
     this.unsubscribe = new Subject();
     const storageRef = this.storage.ref(path);
-    const task = storageRef.putString(fileAsDataUrl, 'data_url');
+    const task = storageRef.putString(fileAsDataUrl, 'data_url', {
+      cacheControl: 'private, max-age=15552000',
+    });
 
     task
       .percentageChanges()

@@ -13,6 +13,8 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FileUploaderService } from '../../../../shared/services/file-uploader.service';
+import { Observable } from 'rxjs';
+import { getNetworkOnlineState } from '../../../../store/selectors/network.selectors';
 
 @Component({
   selector: 'app-profile-photo',
@@ -25,6 +27,9 @@ export class ProfilePhotoComponent extends ClearObservable implements OnInit {
   isDesktop: boolean;
   newPhotoUrl: string = null;
   uploadedPhotoPath: string = null;
+  isNetworkOnline$: Observable<boolean> = this.store.select(
+    getNetworkOnlineState
+  );
 
   constructor(
     private store: Store,

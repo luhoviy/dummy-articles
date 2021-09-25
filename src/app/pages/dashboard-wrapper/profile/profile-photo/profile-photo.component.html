@@ -11,7 +11,7 @@
       no-pointer
       w-100
       [src]="!!newPhotoUrl ? newPhotoUrl : user.photoUrl"
-      alt="avatar"
+      alt="profile-photo"
     />
   </mat-card>
 
@@ -61,7 +61,7 @@
       </button>
       <button
         (click)="save()"
-        [disabled]="!newPhotoUrl"
+        [disabled]="!newPhotoUrl || !(isNetworkOnline$ | async)"
         mat-raised-button
         color="primary"
       >
