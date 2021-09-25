@@ -64,7 +64,7 @@ export class AuthService {
         case AuthProviderType.PASSWORD:
           return 'Email';
         case AuthProviderType.GITHUB:
-          return 'Github';
+          return 'GitHub';
         default:
           return '';
       }

@@ -1,8 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import {
-  AuthProvidersMap,
-  AuthProviderType,
-} from '../../../../authentication/shared/auth.model';
+import { AuthProvidersMap, AuthProviderType, } from '../../../../authentication/shared/auth.model';
 import { Store } from '@ngrx/store';
 import * as fromAuthFeature from '../../../../authentication/store';
 import { MatAccordion } from '@angular/material/expansion';
@@ -12,6 +9,7 @@ import { ClearObservable } from '../../../../shared/components/clear-observable.
 import { ConfirmDialogData } from '../../../../shared/components/confirmation-dialog/confirmation-dialog.model';
 import { ConfirmationDialogService } from '../../../../shared/components/confirmation-dialog/confirmation-dialog.service';
 import { AuthService } from '../../../../authentication/services/auth.service';
+import { NotificationsService } from "../../../../shared/services/notifications.service";
 
 @Component({
   selector: 'app-linked-accounts',
@@ -25,10 +23,12 @@ export class LinkedAccountsComponent
   @ViewChild(MatAccordion) accordion: MatAccordion;
   readonly AuthProviderType = AuthProviderType;
   providersMap: AuthProvidersMap = {};
+  connectedProviders: AuthProviderType[];
 
   constructor(
     private store: Store,
-    private confirmDialog: ConfirmationDialogService
+    private confirmDialog: ConfirmationDialogService,
+    private notifications: NotificationsService
   ) {
     super();
   }
@@ -40,7 +40,10 @@ export class LinkedAccountsComponent
         filter((user) => !!user),
         takeUntil(this.destroy$)
       )
-      .subscribe((user) => (this.providersMap = user.providersDataMap));
+      .subscribe(user => {
+        this.providersMap = user.providersDataMap;
+        this.connectedProviders = user.providerTypes;
+      });
   }
 
   ngAfterViewInit(): void {
@@ -56,14 +59,21 @@ export class LinkedAccountsComponent
   }
 
   public async unlinkProvider(providerType: AuthProviderType): Promise<void> {
+    const transformedProviderType = AuthService.transformAuthProviderType(providerType);
+    if (!this.connectedProviders.includes(AuthProviderType.PASSWORD) && this.connectedProviders.length === 1) {
+      this.notifications.error(
+        `Forbidden: To remove ${transformedProviderType} accounts, you must first set a password or link the account using other types of authentication providers.`,
+        5
+      )
+      return;
+    }
+
     const config = new ConfirmDialogData();
-    config.description = `All ${AuthService.transformAuthProviderType(
-      providerType
-    )} accounts will be automatically removed.`;
+    config.description = `All ${transformedProviderType} accounts will be automatically removed.`;
     const confirmed = await this.confirmDialog.open(config).toPromise();
     if (confirmed) {
       this.store.dispatch(
-        fromAuthFeature.unlinkAnotherAccount({ providerType })
+        fromAuthFeature.unlinkAnotherAccount({providerType})
       );
     }
   }
