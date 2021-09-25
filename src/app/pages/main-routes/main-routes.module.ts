@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DashboardWrapperRoutingModule } from './dashboard-wrapper-routing.module';
-import { DashboardWrapperComponent } from './dashboard-wrapper.component';
+import { MainRoutesRoutingModule } from './main-routes-routing.module';
+import { MainRoutesComponent } from './main-routes.component';
 import { SharedModule } from '../../shared/shared.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -10,10 +10,10 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 @NgModule({
-  declarations: [DashboardWrapperComponent],
+  declarations: [MainRoutesComponent],
   imports: [
     CommonModule,
-    DashboardWrapperRoutingModule,
+    MainRoutesRoutingModule,
     SharedModule,
     MatMenuModule,
     MatSidenavModule,
@@ -22,4 +22,5 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     AngularFireStorageModule,
   ],
 })
-export class DashboardWrapperModule {}
+export class MainRoutesModule {
+}

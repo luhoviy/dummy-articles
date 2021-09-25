@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardWrapperComponent } from './dashboard-wrapper.component';
+import { MainRoutesComponent } from './main-routes.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: DashboardWrapperComponent,
+    component: MainRoutesComponent,
     children: [
       {
         path: '',
@@ -38,4 +38,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class DashboardWrapperRoutingModule {}
+export class MainRoutesRoutingModule {
+}

@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardWrapperComponent } from './dashboard-wrapper.component';
+import { MainRoutesComponent } from './main-routes.component';
 
-describe('DashboardWrapperComponent', () => {
-  let component: DashboardWrapperComponent;
-  let fixture: ComponentFixture<DashboardWrapperComponent>;
+describe('MainRoutesComponent', () => {
+  let component: MainRoutesComponent;
+  let fixture: ComponentFixture<MainRoutesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DashboardWrapperComponent],
+      declarations: [MainRoutesComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardWrapperComponent);
+    fixture = TestBed.createComponent(MainRoutesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

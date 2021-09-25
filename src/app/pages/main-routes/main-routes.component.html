@@ -2,14 +2,14 @@
   w-100
   fxLayoutAlign="start center"
   fxLayoutGap="1rem"
-  class="dashboard-header p-1"
+  class="header p-1"
   *ngIf="currentUser$ | async as user"
 >
   <div fxFlex="1 1 auto">
     <a
       routerLink="/display/dashboard"
       pointer
-      class="dashboard-header__logo"
+      class="header__logo"
       fxLayoutAlign="start center"
       fxLayoutGap="0.3rem"
       no-wrap
@@ -21,7 +21,7 @@
   </div>
 
   <button
-    class="dashboard-header__menu-btn"
+    class="header__menu-btn"
     *ngIf="!isDesktop"
     mat-icon-button
     (click)="sideNav.toggle()"
@@ -33,13 +33,13 @@
     fxHide.xs
     [matMenuTriggerFor]="profileMenu"
     mat-button
-    class="dashboard-header__profile-btn"
+    class="header__profile-btn"
   >
     <span fxLayoutAlign="start center" fxLayoutGap="0.7rem">
       <div fxFlex="40px" imageSkeletonWrapper sizeUnit="px" [size]="40">
         <img [src]="user.photoUrl" alt="avatar" />
       </div>
-      <span class="m-0 mat-h4 dashboard-header__profile-btn__display-name">
+      <span class="m-0 mat-h4 header__profile-btn__display-name">
         {{ user.displayName }}
       </span>
       <mat-icon>expand_more</mat-icon>

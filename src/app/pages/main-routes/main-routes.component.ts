@@ -7,15 +7,14 @@ import { map, takeUntil } from 'rxjs/operators';
 import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
-  selector: 'app-dashboard-wrapper',
-  templateUrl: './dashboard-wrapper.component.html',
-  styleUrls: ['./dashboard-wrapper.component.scss'],
+  selector: 'app-main-routes',
+  templateUrl: './main-routes.component.html',
+  styleUrls: ['./main-routes.component.scss'],
 })
-export class DashboardWrapperComponent
+export class MainRoutesComponent
   extends ClearObservable
-  implements OnInit
-{
-  @ViewChild('sideNav', { static: false }) sideNav: MatSidenav;
+  implements OnInit {
+  @ViewChild('sideNav', {static: false}) sideNav: MatSidenav;
   currentUser$ = this.store.select(fromAuthFeature.getCurrentUser);
   isDesktop: boolean = true;
 
