@@ -6,17 +6,18 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { StoreModule } from '@ngrx/store';
-import { metaReducers, reducers } from './store/reducers';
+import { metaReducers, reducers } from './store/reducers/app.reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { AppEffects } from './app.effects';
+import { AppEffects } from './store/effects/app.effects';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginModule } from './pages/login/login.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NoConnectionModule } from './shared/components/no-connection/no-connection.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AuthEffects } from './authentication/store/effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,14 +34,14 @@ import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
       metaReducers,
       runtimeChecks: {
         strictStateImmutability: true,
-        strictActionImmutability: true
+        strictActionImmutability: true,
       },
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
-      logOnly: environment.production
+      logOnly: environment.production,
     }),
-    EffectsModule.forRoot([AppEffects]),
+    EffectsModule.forRoot([AppEffects, AuthEffects]),
     AuthenticationModule,
     BrowserAnimationsModule,
     LoginModule,
@@ -51,5 +52,4 @@ import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

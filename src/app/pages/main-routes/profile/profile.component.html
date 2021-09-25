@@ -1,0 +1,50 @@
+<mat-tab-group
+  mat-stretch-tabs
+  dynamicHeight
+  (selectedIndexChange)="selectedTabIndex = $event"
+  class="example-stretched-tabs mat-elevation-z4"
+>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-05">assignment</mat-icon>
+      Profile Info
+    </ng-template>
+
+    <ng-container *ngIf="!selectedTabIndex">
+      <app-profile-info></app-profile-info>
+    </ng-container>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-05">portrait</mat-icon>
+      Profile Photo
+    </ng-template>
+
+    <ng-container *ngIf="selectedTabIndex === 1">
+      <app-profile-photo></app-profile-photo>
+    </ng-container>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-05">vpn_key</mat-icon>
+      Password
+    </ng-template>
+
+    <ng-container *ngIf="selectedTabIndex === 2">
+      <app-user-password></app-user-password>
+    </ng-container>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-05">groups</mat-icon>
+      Linked accounts
+    </ng-template>
+
+    <ng-container *ngIf="selectedTabIndex === 3">
+      <app-linked-accounts></app-linked-accounts>
+    </ng-container>
+  </mat-tab>
+</mat-tab-group>

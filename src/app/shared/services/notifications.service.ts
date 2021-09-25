@@ -7,11 +7,10 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 export class NotificationsService {
   config: MatSnackBarConfig = {
     horizontalPosition: 'center',
-    verticalPosition: 'top'
+    verticalPosition: 'top',
   };
 
-  constructor(private snackBar: MatSnackBar) {
-  }
+  constructor(private snackBar: MatSnackBar) {}
 
   public success(
     text: string,
@@ -19,7 +18,7 @@ export class NotificationsService {
     showButton = false,
     buttonText = 'Dismiss'
   ): void {
-    this.setConfig(notificationDurationInSeconds, 'error-snackbar');
+    this.setConfig(notificationDurationInSeconds, 'success-snackbar');
     this.snackBar.open(text, showButton ? buttonText : undefined, this.config);
   }
 

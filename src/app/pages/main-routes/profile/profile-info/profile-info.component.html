@@ -1,0 +1,61 @@
+<div
+  *ngIf="!!user"
+  class="p-1 profile-info-wrapper"
+  fxLayoutAlign="center center"
+>
+  <mat-card fxFlex="30" fxFlex.lt-lg="50" fxFlex.lt-md="70" fxFlex.xs="100">
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0.5rem">
+      <div imageSkeletonWrapper [size]="15">
+        <img [src]="user.photoUrl" alt="profile-photo" />
+      </div>
+      <h2 class="m-0" text-center>{{ user.displayName }}</h2>
+    </div>
+    <mat-list class="profile-info-wrapper__info-list">
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <mat-icon mat-list-icon>email</mat-icon>
+        <div mat-line>{{ user.email }}</div>
+      </mat-list-item>
+
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <mat-icon mat-list-icon>cake</mat-icon>
+        <div mat-line>{{ user.birthDate | date: "longDate" | fillEmpty }}</div>
+      </mat-list-item>
+
+      <mat-divider></mat-divider>
+      <mat-list-item
+        matTooltip="Account ID"
+        matTooltipClass="primary-tooltip"
+        matTooltipPosition="left"
+      >
+        <mat-icon mat-list-icon>tag</mat-icon>
+        <div mat-line>{{ user.id }}</div>
+      </mat-list-item>
+
+      <mat-divider></mat-divider>
+      <mat-list-item
+        matTooltip="Registration Date"
+        matTooltipClass="primary-tooltip"
+        matTooltipPosition="left"
+      >
+        <mat-icon mat-list-icon>pending_actions</mat-icon>
+        <div mat-line>
+          {{ user.metadata.creationTime | date: "longDate" | fillEmpty }}
+        </div>
+      </mat-list-item>
+    </mat-list>
+
+    <mat-divider></mat-divider>
+    <button
+      [disabled]="!(isNetworkOnline$ | async)"
+      (click)="openEditModal()"
+      w-100
+      class="mt-1"
+      mat-raised-button
+      color="primary"
+    >
+      <span class="mat-h3 m-0">Edit</span>
+    </button>
+  </mat-card>
+</div>

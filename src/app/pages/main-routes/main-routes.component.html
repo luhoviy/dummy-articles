@@ -1,0 +1,107 @@
+<header
+  w-100
+  fxLayoutAlign="start center"
+  fxLayoutGap="1rem"
+  class="header p-1"
+  *ngIf="currentUser$ | async as user"
+>
+  <div fxFlex="1 1 auto">
+    <a
+      routerLink="/display/dashboard"
+      pointer
+      class="header__logo"
+      fxLayoutAlign="start center"
+      fxLayoutGap="0.3rem"
+      no-wrap
+      fxFlex="fit-content"
+    >
+      <mat-icon>fitbit</mat-icon>
+      <span class="mat-h4 m-0">Dummy Articles</span>
+    </a>
+  </div>
+
+  <button
+    class="header__menu-btn"
+    *ngIf="!isDesktop"
+    mat-icon-button
+    (click)="sideNav.toggle()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <button
+    fxHide.xs
+    [matMenuTriggerFor]="profileMenu"
+    mat-button
+    class="header__profile-btn"
+  >
+    <span fxLayoutAlign="start center" fxLayoutGap="0.7rem">
+      <div fxFlex="40px" imageSkeletonWrapper sizeUnit="px" [size]="40">
+        <img [src]="user.photoUrl" alt="avatar" />
+      </div>
+      <span class="m-0 mat-h4 header__profile-btn__display-name">
+        {{ user.displayName }}
+      </span>
+      <mat-icon>expand_more</mat-icon>
+    </span>
+  </button>
+
+  <mat-menu #profileMenu="matMenu">
+    <a routerLink="/display/profile" mat-menu-item>
+      <mat-icon>account_circle</mat-icon>
+      <span>Edit Profile</span>
+    </a>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+</header>
+
+<main fxLayout="row" fxLayoutGap="5px" class="main-container">
+  <ng-template #navList>
+    <mat-nav-list
+      class="p-0 main-container__nav-list"
+      role="navigation"
+      fxFlex="200px"
+      fxLayout="column"
+      h-100
+    >
+      <div fxFlex="grow">
+        <a
+          routerLinkActive="active"
+          mat-list-item
+          routerLink="/display/dashboard"
+          (click)="!isDesktop ? sideNav.close() : null"
+        >
+          Dashboard
+        </a>
+        <mat-divider></mat-divider>
+        <a
+          routerLinkActive="active"
+          mat-list-item
+          routerLink="/display/profile"
+          (click)="!isDesktop ? sideNav.close() : null"
+        >
+          Profile
+        </a>
+      </div>
+      <mat-list-item (click)="logout()" mat-list-item>
+        <mat-icon class="mr-05" mat-list-icon>logout</mat-icon>
+        Logout
+      </mat-list-item>
+    </mat-nav-list>
+  </ng-template>
+
+  <ng-container *ngIf="isDesktop" [ngTemplateOutlet]="navList"></ng-container>
+
+  <mat-sidenav-container fxFlex="grow" class="main-container__content-wrapper">
+    <mat-sidenav *ngIf="!isDesktop" #sideNav>
+      <ng-container [ngTemplateOutlet]="navList"></ng-container>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="p-1 main-container__content-wrapper__content">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</main>

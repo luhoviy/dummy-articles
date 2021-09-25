@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
-import {
-  AngularFireAuthGuard,
-  redirectLoggedInTo,
-  redirectUnauthorizedTo,
-} from '@angular/fire/compat/auth-guard';
+import { AngularFireAuthGuard, redirectLoggedInTo, redirectUnauthorizedTo, } from '@angular/fire/compat/auth-guard';
 import { NoAuthCanLoadGuard } from './guards/no-auth-can-load.guard';
 import { AuthCanLoadGuard } from './guards/auth-can-load.guard';
 
@@ -43,8 +39,8 @@ const routes: Routes = [
   {
     path: 'display',
     loadChildren: () =>
-      import('./pages/dashboard-wrapper/dashboard-wrapper.module').then(
-        (module) => module.DashboardWrapperModule
+      import('./pages/main-routes/main-routes.module').then(
+        (module) => module.MainRoutesModule
       ),
     canActivate: [AngularFireAuthGuard],
     canLoad: [AuthCanLoadGuard],

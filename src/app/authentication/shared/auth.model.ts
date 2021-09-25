@@ -10,11 +10,11 @@ export enum AuthProviderType {
   PASSWORD = 'password',
   GOOGLE = 'google.com',
   FACEBOOK = 'facebook.com',
-  GITHUB = 'github.com'
+  GITHUB = 'github.com',
 }
 
 export interface AuthProvidersMap {
-  [id: string]: firebase.UserInfo[]
+  [id: string]: firebase.UserInfo[];
 }
 
 export class User {
@@ -27,17 +27,21 @@ export class User {
   providerTypes: AuthProviderType[];
   providersDataMap: AuthProvidersMap;
   metadata: firebase.auth.UserMetadata;
+  birthDate: string = null;
 
-  constructor(firebaseUser: firebase.User, additionalInfo?: UserAdditionalInfo) {
+  constructor(
+    firebaseUser: firebase.User,
+    additionalInfo?: UserAdditionalInfo
+  ) {
     firebaseUser = cloneDeep(firebaseUser);
     this.displayName = this.firstName = firebaseUser.displayName || 'Anonymous';
     this.email = firebaseUser.email;
     this.photoUrl = firebaseUser.photoURL || 'assets/icons/user.png';
     this.id = firebaseUser.uid;
     this.providersDataMap = groupBy(firebaseUser.providerData, 'providerId');
-    this.providerTypes = uniq(firebaseUser.providerData.map(
-      (provider) => provider.providerId
-    )) as AuthProviderType[];
+    this.providerTypes = uniq(
+      firebaseUser.providerData.map((provider) => provider.providerId)
+    ) as AuthProviderType[];
     this.metadata = assign({}, firebaseUser.metadata);
     if (!isEmpty(additionalInfo)) {
       this.firstName = !!additionalInfo.firstName
@@ -47,6 +51,7 @@ export class User {
         this.lastName = additionalInfo.lastName;
         this.displayName = `${this.firstName} ${this.lastName}`;
       }
+      this.birthDate = additionalInfo.birthDate || null;
     }
   }
 }
@@ -54,7 +59,6 @@ export class User {
 export interface UserAdditionalInfo {
   firstName: string;
   lastName: string;
+  birthDate: string;
   isNewUser?: boolean;
 }
-
-

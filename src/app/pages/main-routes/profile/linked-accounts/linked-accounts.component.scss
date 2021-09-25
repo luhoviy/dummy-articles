@@ -1,0 +1,25 @@
+@import "src/app/shared/variables";
+
+.linked-accounts-accordion {
+  &__account-row {
+    &__info p {
+      line-break: anywhere;
+    }
+  }
+
+  &__no-accounts-alert {
+    width: fit-content;
+    color: $light-grey;
+
+    .mat-icon {
+      width: 5rem;
+      height: 5rem;
+      line-height: 5rem;
+      font-size: 5rem;
+    }
+
+    button {
+      font-size: 1.1rem;
+    }
+  }
+}

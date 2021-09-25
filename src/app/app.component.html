@@ -6,5 +6,12 @@
   type="ball-clip-rotate"
   [fullScreen]="true"
 >
+  <p
+    no-wrap
+    class="mat-h1 loading-text"
+    *ngIf="fileUploader.uploadingProgress$ | async as percentage"
+  >
+    Uploading... {{ percentage }} %
+  </p>
 </ngx-spinner>
 <app-no-connection></app-no-connection>

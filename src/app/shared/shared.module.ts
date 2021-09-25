@@ -4,15 +4,17 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ClearObservable } from './components/clear-observable.component';
 import { ImageFadeInDirective } from './directives/image-fade-in.directive';
 import { StopPropagationDirective } from './directives/stop-propagation.directive';
-import { MatCardModule } from "@angular/material/card";
-import { MatIconModule } from "@angular/material/icon";
-import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { ImageSkeletonWrapperDirective } from './directives/image-skeleton-wrapper.directive';
 
 @NgModule({
   declarations: [
     ClearObservable,
     ImageFadeInDirective,
     StopPropagationDirective,
+    ImageSkeletonWrapperDirective,
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,7 @@ import { MatButtonModule } from "@angular/material/button";
     MatCardModule,
     MatIconModule,
     MatButtonModule,
+    ImageSkeletonWrapperDirective,
   ],
 })
-export class SharedModule {
-}
+export class SharedModule {}

@@ -1,0 +1,57 @@
+<ng-container *ngIf="showDropzone; else uploadButton">
+  <h5>Drag and drop image file below</h5>
+
+  <div
+    appFileUploader
+    (onFileDrop)="onFileUpload($event)"
+    (dragActive)="showDragoverBox = $event"
+    relative
+    class="file-dropzone p-2"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="0.5rem"
+  >
+    <mat-icon class="file-dropzone__icon">file_upload</mat-icon>
+
+    <span class="mat-body">.jpg .png</span>
+
+    <span text-center class="file-dropzone__suggestion-text">
+      You can also upload files by
+    </span>
+
+    <span (click)="fileInput.click()" link pointer>clicking here</span>
+
+    <div
+      [@fadeInState]="showDragoverBox ? 'shown' : 'hidden'"
+      fxLayoutAlign="center center"
+      absolute-mid
+      h-100
+      w-100
+      class="file-dropzone__dragover-box"
+    >
+      <mat-icon no-pointer class="file-dropzone__dragover-box__icon"
+        >perm_media
+      </mat-icon>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #uploadButton>
+  <button
+    class="mt-1"
+    w-100
+    mat-raised-button
+    color="primary"
+    (click)="fileInput.click()"
+  >
+    <span class="mat-h3">Upload Image</span>
+  </button>
+</ng-template>
+
+<input
+  hidden
+  (change)="onFileUpload($event)"
+  type="file"
+  #fileInput
+  accept="image/png,image/jpeg,image/jpg"
+/>

@@ -1,26 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { AngularFireAuth, AngularFireAuthModule, PERSISTENCE, USE_DEVICE_LANGUAGE } from '@angular/fire/compat/auth';
-import { EffectsModule } from '@ngrx/effects';
-import { Store, StoreModule } from '@ngrx/store';
+import {
+  AngularFireAuth,
+  AngularFireAuthModule,
+  PERSISTENCE,
+  USE_DEVICE_LANGUAGE,
+} from '@angular/fire/compat/auth';
+import { Store } from '@ngrx/store';
 import { filter, map, withLatestFrom } from 'rxjs/operators';
 import { User } from './shared/auth.model';
 import * as fromAuthStore from './store';
-import { AuthEffects } from './store/effects/effects';
-import { getNetworkOnlineState } from "../store/selectors/network.selectors";
-import { AuthService } from "./services/auth.service";
+import { getIsNetworkOnline } from '../store/selectors/app.selectors';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    AngularFireAuthModule,
-    StoreModule.forFeature('authentication', fromAuthStore.reducers),
-    EffectsModule.forFeature([AuthEffects]),
-  ],
+  imports: [CommonModule, AngularFireAuthModule],
   providers: [
-    {provide: USE_DEVICE_LANGUAGE, useValue: true},
-    {provide: PERSISTENCE, useValue: 'local'},
+    { provide: USE_DEVICE_LANGUAGE, useValue: true },
+    { provide: PERSISTENCE, useValue: 'local' },
   ],
 })
 export class AuthenticationModule {
@@ -34,7 +32,7 @@ export class AuthenticationModule {
         withLatestFrom(
           this.store.select(fromAuthStore.getCurrentUser),
           this.store.select(fromAuthStore.getIsInitialAuthState),
-          this.store.select(getNetworkOnlineState)
+          this.store.select(getIsNetworkOnline)
         ),
         filter(
           ([currentUser, prevUser, isInitialState]) =>
@@ -43,11 +41,13 @@ export class AuthenticationModule {
         map(([currentUser, _, isInitialState, isOnline]) => {
           const user = !!currentUser ? new User(currentUser) : null;
           if (!!user && isInitialState && isOnline) {
-            this.authService.mergeAndSaveUser(user);
+            this.authService.mergeAndSaveUser(user, true);
           }
           return user;
         })
       )
-      .subscribe((user) => this.store.dispatch(fromAuthStore.updateAuthState({user})));
+      .subscribe((user) =>
+        this.store.dispatch(fromAuthStore.updateAuthState({ user }))
+      );
   }
 }
