@@ -1,5 +1,9 @@
 @import "src/app/shared/variables";
 
+.title {
+  color: $primary-color;
+}
+
 .primary-tooltip {
   font-size: 0.8rem;
   background-color: $primary-color;

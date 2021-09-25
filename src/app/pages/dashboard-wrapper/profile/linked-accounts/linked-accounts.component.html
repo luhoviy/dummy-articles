@@ -1,18 +1,127 @@
-<mat-card>
-  <button mat-raised-button (click)="linkProvider(AuthProviderType.FACEBOOK)">
-    link FB
-  </button>
-  <button mat-raised-button (click)="unlinkProvider(AuthProviderType.PASSWORD)">
-    UNLINK EMAIL
-  </button>
+<div class="p-1">
+  <p class="title" ngClass.gt-xs="mat-h2" ngClass.xs="mat-h3">
+    List of accounts that have been linked to your main account via other
+    authentication provider types
+  </p>
 
-  <button mat-raised-button (click)="linkProvider(AuthProviderType.GOOGLE)">
-    link Google
-  </button>
-  <!--  <button mat-raised-button (click)="unlinkProvider(AuthProviderType.GOOGLE)">link Google</button>-->
+  <mat-accordion multi class="linked-accounts-accordion">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title fxLayoutAlign="start center" fxLayoutGap="0.5rem">
+          <div imageSkeletonWrapper [size]="24" sizeUnit="px">
+            <img src="assets/icons/google.png" alt="google" />
+          </div>
+          <span class="mat-h3 m-0">Google</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
 
-  <button mat-raised-button (click)="linkProvider(AuthProviderType.GITHUB)">
-    link GITHUB
-  </button>
-  <!--  <button mat-raised-button (click)="unlinkProvider(AuthProviderType.GITHUB)">link GITHUB</button>-->
-</mat-card>
+      <ng-container
+        *ngTemplateOutlet="
+          accountsList;
+          context: { $implicit: AuthProviderType.GOOGLE }
+        "
+      ></ng-container>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title fxLayoutAlign="start center" fxLayoutGap="0.5rem">
+          <div imageSkeletonWrapper [size]="24" sizeUnit="px">
+            <img src="assets/icons/github.png" alt="github" />
+          </div>
+          <span class="mat-h3 m-0">Github</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <ng-container
+        *ngTemplateOutlet="
+          accountsList;
+          context: { $implicit: AuthProviderType.GITHUB }
+        "
+      ></ng-container>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title fxLayoutAlign="start center" fxLayoutGap="0.5rem">
+          <div imageSkeletonWrapper [size]="24" sizeUnit="px">
+            <img src="assets/icons/facebook.png" alt="facebook" />
+          </div>
+          <span class="mat-h3 m-0">Facebook</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <ng-container
+        *ngTemplateOutlet="
+          accountsList;
+          context: { $implicit: AuthProviderType.FACEBOOK }
+        "
+      ></ng-container>
+    </mat-expansion-panel>
+
+    <ng-template #accountsList let-providerType>
+      <ng-container *ngIf="!!providersMap[providerType]; else noAccounts">
+        <div fxLayout="row" fxLayoutGap="1rem">
+          <button
+            (click)="linkProvider(providerType)"
+            color="primary"
+            mat-stroked-button
+          >
+            Add
+          </button>
+          <button
+            (click)="unlinkProvider(providerType)"
+            color="warn"
+            mat-stroked-button
+          >
+            Remove all
+          </button>
+        </div>
+
+        <mat-divider class="mt-1 mb-1"></mat-divider>
+
+        <div
+          class="linked-accounts-accordion__account-row"
+          *ngFor="let account of providersMap[providerType]; last as isLast"
+        >
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
+            <div fxFlex="70px" imageSkeletonWrapper [size]="70" sizeUnit="px">
+              <img [src]="account.photoURL" [attr.alt]="account.displayName" />
+            </div>
+
+            <div
+              class="linked-accounts-accordion__account-row__info"
+              fxFlex="grow"
+            >
+              <p class="mat-h3 m-0">{{ account.displayName }}</p>
+              <p class="mat-caption m-0">{{ account.email }}</p>
+            </div>
+          </div>
+
+          <mat-divider class="mt-1 mb-1" *ngIf="!isLast"></mat-divider>
+        </div>
+      </ng-container>
+
+      <ng-template #noAccounts>
+        <div
+          class="m-auto linked-accounts-accordion__no-accounts-alert"
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="1rem"
+        >
+          <mat-icon>no_accounts</mat-icon>
+          <span text-center class="mat-h1 m-0">No Accounts Found</span>
+          <button
+            class="mb-1"
+            w-100
+            (click)="linkProvider(providerType)"
+            mat-raised-button
+            color="primary"
+          >
+            Add Account
+          </button>
+        </div>
+      </ng-template>
+    </ng-template>
+  </mat-accordion>
+</div>

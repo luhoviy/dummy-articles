@@ -16,6 +16,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { LinkedAccountsComponent } from './linked-accounts/linked-accounts.component';
 import { UserPasswordComponent } from './user-password/user-password.component';
 import { NewPasswordFormModule } from '../../../shared/components/new-password-form/new-password-form.module';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { ConfirmationDialogModule } from '../../../shared/components/confirmation-dialog/confirmation-dialog.module';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { NewPasswordFormModule } from '../../../shared/components/new-password-f
     FileUploaderModule,
     MatSlideToggleModule,
     NewPasswordFormModule,
+    MatExpansionModule,
+    ConfirmationDialogModule,
   ],
 })
 export class ProfileModule {}
