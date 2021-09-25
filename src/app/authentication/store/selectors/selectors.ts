@@ -1,19 +1,16 @@
-import { createSelector } from '@ngrx/store';
-import * as fromFeature from '../reducers';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { AuthState } from '../reducers';
 
-export const getCurrentUser = createSelector(
-  fromFeature.getAuthenticationState,
-  (state) => (state ? state.auth.user : null)
+const getAuthenticationState =
+  createFeatureSelector<AuthState>('authentication');
+
+export const getCurrentUser = createSelector(getAuthenticationState, (state) =>
+  state ? state.user : null
 );
 
 export const getIsLoggedIn = createSelector(getCurrentUser, (user) => !!user);
 
 export const getIsInitialAuthState = createSelector(
-  fromFeature.getAuthenticationState,
-  (state) => (state ? state.auth.initialAuthState : true)
-);
-
-export const getIsAuthLoading = createSelector(
-  fromFeature.getAuthenticationState,
-  (state) => (state ? state.auth.isLoading : false)
+  getAuthenticationState,
+  (state) => (state ? state.initialAuthState : true)
 );

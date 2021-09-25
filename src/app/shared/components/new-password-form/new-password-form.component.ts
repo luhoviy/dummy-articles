@@ -9,16 +9,16 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Actions, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { CHANGE_USER_PASSWORD_SUCCESS } from '../../../authentication/store';
+import { getIsNetworkOnline } from '../../../store/selectors/app.selectors';
 import {
   matchingOldPasswordValidator,
   matchPasswordsValidator,
 } from '../../utils';
-import { Observable } from 'rxjs';
-import { getNetworkOnlineState } from '../../../store/selectors/network.selectors';
-import { Store } from '@ngrx/store';
-import { Actions, ofType } from '@ngrx/effects';
-import { CHANGE_USER_PASSWORD_SUCCESS } from '../../../authentication/store';
-import { takeUntil } from 'rxjs/operators';
 import { ClearObservable } from '../clear-observable.component';
 
 export interface NewPasswordFormResponse {
@@ -40,9 +40,7 @@ export class NewPasswordFormComponent
   @Input() askOldPassword: boolean;
   @Input() submitButtonText: string = 'Reset Password';
   @Output() onSubmit = new EventEmitter<NewPasswordFormResponse>();
-  isNetworkOnline$: Observable<boolean> = this.store.select(
-    getNetworkOnlineState
-  );
+  isNetworkOnline$: Observable<boolean> = this.store.select(getIsNetworkOnline);
   form: FormGroup;
 
   constructor(

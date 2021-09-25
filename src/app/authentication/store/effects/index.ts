@@ -19,6 +19,7 @@ import { User, UserAdditionalInfo } from '../../shared/auth.model';
 import firebase from 'firebase/compat/app';
 import { Store } from '@ngrx/store';
 import { mergeUserWithDbUserRecord } from '../../../shared/utils';
+import { updateLoadingState } from '../../../store/actions/app.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -34,10 +35,9 @@ export class AuthEffects {
       ofType(fromAuthFeature.saveUserToDb),
       tap(({ user, setLoadingState }) => {
         this.authService.updateUserInFirebaseAuthStore(user);
-        if (setLoadingState)
-          this.store.dispatch(
-            fromAuthFeature.updateAuthLoading({ isLoading: true })
-          );
+        if (setLoadingState) {
+          this.store.dispatch(updateLoadingState({ isLoading: true }));
+        }
       }),
       mergeMap(({ user, setLoadingState }) =>
         this.authService.saveUserDataToDb(user).pipe(
@@ -46,10 +46,9 @@ export class AuthEffects {
             of(fromAuthFeature.saveUserToDbFailure({ error }))
           ),
           finalize(() => {
-            if (setLoadingState)
-              this.store.dispatch(
-                fromAuthFeature.updateAuthLoading({ isLoading: false })
-              );
+            if (setLoadingState) {
+              this.store.dispatch(updateLoadingState({ isLoading: false }));
+            }
           })
         )
       )
@@ -248,7 +247,7 @@ export class AuthEffects {
         fromAuthFeature.UNLINK_ANOTHER_ACCOUNT,
         fromAuthFeature.CHANGE_USER_PASSWORD
       ),
-      map((_) => fromAuthFeature.updateAuthLoading({ isLoading: true }))
+      map((_) => updateLoadingState({ isLoading: true }))
     )
   );
 
@@ -268,7 +267,7 @@ export class AuthEffects {
         fromAuthFeature.CHANGE_USER_PASSWORD_SUCCESS,
         fromAuthFeature.CHANGE_USER_PASSWORD_FAILURE
       ),
-      map((_) => fromAuthFeature.updateAuthLoading({ isLoading: false }))
+      map((_) => updateLoadingState({ isLoading: false }))
     )
   );
 }

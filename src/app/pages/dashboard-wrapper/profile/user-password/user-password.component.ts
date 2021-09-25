@@ -5,7 +5,6 @@ import { ClearObservable } from '../../../../shared/components/clear-observable.
 import { filter, takeUntil } from 'rxjs/operators';
 import { AuthProviderType } from '../../../../authentication/shared/auth.model';
 import { NewPasswordFormResponse } from '../../../../shared/components/new-password-form/new-password-form.component';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { Actions, ofType } from '@ngrx/effects';
 import { NotificationsService } from '../../../../shared/services/notifications.service';
 import { AuthService } from '../../../../authentication/services/auth.service';
@@ -24,8 +23,7 @@ export class UserPasswordComponent extends ClearObservable implements OnInit {
     private store: Store,
     private actions$: Actions,
     private authService: AuthService,
-    private notifications: NotificationsService,
-    private spinner: NgxSpinnerService
+    private notifications: NotificationsService
   ) {
     super();
   }
@@ -47,13 +45,6 @@ export class UserPasswordComponent extends ClearObservable implements OnInit {
           AuthProviderType.PASSWORD
         );
       });
-
-    this.store
-      .select(fromAuthFeature.getIsAuthLoading)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((isLoading) =>
-        isLoading ? this.spinner.show() : this.spinner.hide()
-      );
 
     this.actions$
       .pipe(

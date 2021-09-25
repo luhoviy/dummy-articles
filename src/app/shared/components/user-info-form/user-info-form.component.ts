@@ -9,7 +9,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { matchPasswordsValidator } from '../../utils';
 import { Observable } from 'rxjs';
-import { getNetworkOnlineState } from '../../../store/selectors/network.selectors';
+import { getIsNetworkOnline } from '../../../store/selectors/app.selectors';
 import { Store } from '@ngrx/store';
 import { User } from '../../../authentication/shared/auth.model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -37,9 +37,7 @@ export class UserInfoFormComponent implements OnInit {
     new Date().getMonth(),
     new Date().getDate()
   );
-  isNetworkOnline$: Observable<boolean> = this.store.select(
-    getNetworkOnlineState
-  );
+  isNetworkOnline$: Observable<boolean> = this.store.select(getIsNetworkOnline);
   isEditMode: boolean = false;
 
   constructor(

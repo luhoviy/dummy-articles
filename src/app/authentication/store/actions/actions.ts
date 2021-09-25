@@ -126,9 +126,3 @@ export const updateCurrentUser = createAction(
   UPDATE_CURRENT_USER,
   props<{ user: User }>()
 );
-
-export const UPDATE_AUTH_LOADING = 'UPDATE_AUTH_LOADING';
-export const updateAuthLoading = createAction(
-  UPDATE_AUTH_LOADING,
-  props<{ isLoading: boolean }>()
-);

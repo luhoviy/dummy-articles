@@ -7,9 +7,8 @@ import { ClearObservable } from '../../../../shared/components/clear-observable.
 import { filter, take, takeUntil } from 'rxjs/operators';
 import * as fromAuthFeature from '../../../../authentication/store';
 import { saveUserToDb } from '../../../../authentication/store';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable } from 'rxjs';
-import { getNetworkOnlineState } from '../../../../store/selectors/network.selectors';
+import { getIsNetworkOnline } from '../../../../store/selectors/app.selectors';
 
 @Component({
   selector: 'app-profile-info',
@@ -18,15 +17,9 @@ import { getNetworkOnlineState } from '../../../../store/selectors/network.selec
 })
 export class ProfileInfoComponent extends ClearObservable implements OnInit {
   user: User;
-  isNetworkOnline$: Observable<boolean> = this.store.select(
-    getNetworkOnlineState
-  );
+  isNetworkOnline$: Observable<boolean> = this.store.select(getIsNetworkOnline);
 
-  constructor(
-    private dialog: MatDialog,
-    private store: Store,
-    private spinner: NgxSpinnerService
-  ) {
+  constructor(private dialog: MatDialog, private store: Store) {
     super();
   }
 
@@ -38,13 +31,6 @@ export class ProfileInfoComponent extends ClearObservable implements OnInit {
         takeUntil(this.destroy$)
       )
       .subscribe((user) => (this.user = user));
-
-    this.store
-      .select(fromAuthFeature.getIsAuthLoading)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((isLoading) =>
-        isLoading ? this.spinner.show() : this.spinner.hide()
-      );
   }
 
   public openEditModal(): void {

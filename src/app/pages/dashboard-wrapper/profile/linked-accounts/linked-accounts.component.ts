@@ -9,7 +9,6 @@ import { MatAccordion } from '@angular/material/expansion';
 import { filter, take, takeUntil } from 'rxjs/operators';
 import { timer } from 'rxjs';
 import { ClearObservable } from '../../../../shared/components/clear-observable.component';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmDialogData } from '../../../../shared/components/confirmation-dialog/confirmation-dialog.model';
 import { ConfirmationDialogService } from '../../../../shared/components/confirmation-dialog/confirmation-dialog.service';
 import { AuthService } from '../../../../authentication/services/auth.service';
@@ -29,7 +28,6 @@ export class LinkedAccountsComponent
 
   constructor(
     private store: Store,
-    private spinner: NgxSpinnerService,
     private confirmDialog: ConfirmationDialogService
   ) {
     super();
@@ -43,13 +41,6 @@ export class LinkedAccountsComponent
         takeUntil(this.destroy$)
       )
       .subscribe((user) => (this.providersMap = user.providersDataMap));
-
-    this.store
-      .select(fromAuthFeature.getIsAuthLoading)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((isLoading) =>
-        isLoading ? this.spinner.show() : this.spinner.hide()
-      );
   }
 
   ngAfterViewInit(): void {

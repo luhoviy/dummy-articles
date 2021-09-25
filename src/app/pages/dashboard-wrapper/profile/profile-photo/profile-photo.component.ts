@@ -6,15 +6,15 @@ import {
   AuthProviderType,
   User,
 } from '../../../../authentication/shared/auth.model';
-import { filter, finalize, map, take, takeUntil } from 'rxjs/operators';
+import { catchError, filter, map, take, takeUntil } from 'rxjs/operators';
 import { flatten, values } from 'lodash';
 import firebase from 'firebase/compat/app';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { FileUploaderService } from '../../../../shared/services/file-uploader.service';
-import { Observable } from 'rxjs';
-import { getNetworkOnlineState } from '../../../../store/selectors/network.selectors';
+import { Observable, of } from 'rxjs';
+import { getIsNetworkOnline } from '../../../../store/selectors/app.selectors';
+import { updateLoadingState } from '../../../../store/actions/app.actions';
 
 @Component({
   selector: 'app-profile-photo',
@@ -27,14 +27,11 @@ export class ProfilePhotoComponent extends ClearObservable implements OnInit {
   isDesktop: boolean;
   newPhotoUrl: string = null;
   uploadedPhotoPath: string = null;
-  isNetworkOnline$: Observable<boolean> = this.store.select(
-    getNetworkOnlineState
-  );
+  isNetworkOnline$: Observable<boolean> = this.store.select(getIsNetworkOnline);
 
   constructor(
     private store: Store,
     private breakpointObserver: BreakpointObserver,
-    private spinner: NgxSpinnerService,
     private fileUploader: FileUploaderService
   ) {
     super();
@@ -65,13 +62,6 @@ export class ProfilePhotoComponent extends ClearObservable implements OnInit {
         this.newPhotoUrl = null;
         this.uploadedPhotoPath = null;
       });
-
-    this.store
-      .select(fromAuthFeature.getIsAuthLoading)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((isLoading) => {
-        isLoading ? this.spinner.show() : this.spinner.hide();
-      });
   }
 
   public applySuggestedPhoto(
@@ -83,27 +73,22 @@ export class ProfilePhotoComponent extends ClearObservable implements OnInit {
 
   public save(): void {
     if (this.newPhotoUrl === this.uploadedPhotoPath) {
-      this.store.dispatch(
-        fromAuthFeature.updateAuthLoading({ isLoading: true })
-      );
+      this.store.dispatch(updateLoadingState({ isLoading: true }));
       this.fileUploader
         .uploadFileToFireStorage(
-          `user/${this.user.id}/photoUrl`,
+          `users/${this.user.id}/avatar`,
           this.uploadedPhotoPath
         )
         .pipe(
           take(1),
           takeUntil(this.destroy$),
-          finalize(() =>
-            this.store.dispatch(
-              fromAuthFeature.updateAuthLoading({ isLoading: false })
-            )
-          )
+          catchError((error) => {
+            console.log('uploadFileToFireStorage error', error);
+            this.store.dispatch(updateLoadingState({ isLoading: false }));
+            return of(error);
+          })
         )
-        .subscribe(
-          (res) => this.saveUserPhotoUrlToDb(res),
-          (err) => console.log('uploadFileToFireStorage error', err)
-        );
+        .subscribe((res) => this.saveUserPhotoUrlToDb(res));
       return;
     }
 

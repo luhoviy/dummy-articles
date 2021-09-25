@@ -21,11 +21,11 @@ import { AuthService } from '../../authentication/services/auth.service';
 import { AuthProviderType, User } from '../../authentication/shared/auth.model';
 import * as fromAuthFeature from '../../authentication/store';
 import { ClearObservable } from '../../shared/components/clear-observable.component';
-import { NotificationsService } from '../../shared/services/notifications.service';
-import { getNetworkOnlineState } from '../../store/selectors/network.selectors';
-import { ConfirmationDialogService } from '../../shared/components/confirmation-dialog/confirmation-dialog.service';
 import { ConfirmDialogData } from '../../shared/components/confirmation-dialog/confirmation-dialog.model';
+import { ConfirmationDialogService } from '../../shared/components/confirmation-dialog/confirmation-dialog.service';
 import { NewPasswordFormResponse } from '../../shared/components/new-password-form/new-password-form.component';
+import { NotificationsService } from '../../shared/services/notifications.service';
+import { getIsNetworkOnline } from '../../store/selectors/app.selectors';
 
 @Component({
   selector: 'app-password-recovery',
@@ -36,9 +36,7 @@ export class PasswordRecoveryComponent
   extends ClearObservable
   implements OnInit
 {
-  isNetworkOnline$: Observable<boolean> = this.store.select(
-    getNetworkOnlineState
-  );
+  isNetworkOnline$: Observable<boolean> = this.store.select(getIsNetworkOnline);
   emailControl: FormControl;
   isLoading: boolean = false;
   accessToken: string = null;

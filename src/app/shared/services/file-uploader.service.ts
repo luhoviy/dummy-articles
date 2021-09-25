@@ -27,7 +27,7 @@ export class FileUploaderService {
     this.unsubscribe = new Subject();
     const storageRef = this.storage.ref(path);
     const task = storageRef.putString(fileAsDataUrl, 'data_url', {
-      cacheControl: 'private, max-age=15552000',
+      cacheControl: 'private, max-age=172800',
     });
 
     task

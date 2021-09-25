@@ -1,26 +1,24 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { updateNetworkState } from "../actions/network.actions";
-
+import { updateNetworkState } from '../actions/app.actions';
 
 export interface NetworkState {
   isOnline: boolean;
 }
 
 export const initialState: NetworkState = {
-  isOnline: navigator.onLine
+  isOnline: navigator.onLine,
 };
 
-export const reducer = createReducer(
+const reducer = createReducer(
   initialState,
-  on(updateNetworkState, (state,  { isOnline }) => {
+  on(updateNetworkState, (state, { isOnline }) => {
     return {
-      ...state,
-      isOnline
-    }
+      isOnline,
+    };
   })
 );
 
-export function networkReducerFactory(state: NetworkState | undefined, action: Action) {
-  return reducer(state, action);
-}
-
+export const networkReducerFactory = (
+  state: NetworkState | undefined,
+  action: Action
+) => reducer(state, action);

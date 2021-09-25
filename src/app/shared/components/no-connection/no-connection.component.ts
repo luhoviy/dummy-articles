@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { getNetworkOnlineState } from '../../../store/selectors/network.selectors';
+import { getIsNetworkOnline } from '../../../store/selectors/app.selectors';
 import { fadeFromLeft } from '../../animations';
 
 @Component({
@@ -10,10 +10,8 @@ import { fadeFromLeft } from '../../animations';
   styleUrls: ['./no-connection.component.scss'],
   animations: [fadeFromLeft],
 })
-export class NoConnectionComponent implements OnInit {
-  isOnline: Observable<boolean> = this.store.select(getNetworkOnlineState);
+export class NoConnectionComponent {
+  isOnline: Observable<boolean> = this.store.select(getIsNetworkOnline);
 
   constructor(private store: Store) {}
-
-  ngOnInit(): void {}
 }

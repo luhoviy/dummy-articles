@@ -2,27 +2,40 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { fromEvent, merge } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
-import { updateNetworkState } from './store/actions/network.actions';
-import { NotificationsService } from './shared/services/notifications.service';
-import * as fromAuthFeature from './authentication/store';
+import { updateLoadingState, updateNetworkState } from '../actions/app.actions';
+import { NotificationsService } from '../../shared/services/notifications.service';
+import * as fromAuthFeature from '../../authentication/store';
 import { isEmpty } from 'lodash';
-import { AuthProviderType } from './authentication/shared/auth.model';
-import { AuthService } from './authentication/services/auth.service';
-import { ParseFirebaseErrorMessage } from './shared/utils';
+import { AuthProviderType } from '../../authentication/shared/auth.model';
+import { AuthService } from '../../authentication/services/auth.service';
+import { ParseFirebaseErrorMessage } from '../../shared/utils';
 import { Store } from '@ngrx/store';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable()
 export class AppEffects {
   constructor(
     private notifications: NotificationsService,
     private actions$: Actions,
-    private store: Store
+    private store: Store,
+    private spinner: NgxSpinnerService
   ) {}
 
   observeNetworkState$ = createEffect(() =>
     merge(fromEvent(window, 'online'), fromEvent(window, 'offline')).pipe(
       map((event) => updateNetworkState({ isOnline: event.type === 'online' }))
     )
+  );
+
+  toggleLoadingSpinner$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(updateLoadingState),
+        tap(({ isLoading }) =>
+          isLoading ? this.spinner.show() : this.spinner.hide()
+        )
+      ),
+    { dispatch: false }
   );
 
   displayFirebaseErrors$ = createEffect(
