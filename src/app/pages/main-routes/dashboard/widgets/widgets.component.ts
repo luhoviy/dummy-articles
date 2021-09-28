@@ -53,7 +53,7 @@ export class WidgetsComponent extends ClearObservable implements OnInit {
         switchMap((news) =>
           timer(0, 15 * 1000).pipe(
             tap(() => {
-              this.iterator > news.length - 1
+              this.iterator >= news.length - 1
                 ? (this.iterator = 0)
                 : this.iterator++;
               this.showNewsWidget = false;
