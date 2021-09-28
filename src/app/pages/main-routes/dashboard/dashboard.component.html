@@ -1,1 +1,15 @@
-<p>dashboard works!</p>
+<mat-sidenav-container h-100>
+  <mat-sidenav
+    *ngIf="isDesktop"
+    fxHide.lt-lg
+    class="widgets-container"
+    fxFlex="350px"
+    position="end"
+    mode="side"
+    [disableClose]="true"
+  >
+    <app-widgets *ngIf="isWidgetsVisible"></app-widgets>
+  </mat-sidenav>
+
+  <mat-sidenav-content> </mat-sidenav-content>
+</mat-sidenav-container>

@@ -184,6 +184,23 @@ body {
     border-radius: 10px;
   }
 
+  // Tooltips
+
+  .mat-tooltip {
+    font-size: 0.8rem;
+    color: $text-light;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.64);
+    margin: 5px !important;
+
+    &.primary-tooltip {
+      background-color: $primary-color;
+    }
+
+    &.warning-tooltip {
+      color: $warning;
+    }
+  }
+
   // Shared elements
 
   form {
@@ -208,7 +225,7 @@ body {
     transition: background-color 9999s ease-in-out 0s, color 9999s ease-out;
   }
 
-  [imageSkeletonWrapper] {
+  [imgLoadingContainer] {
     position: relative;
     overflow: hidden;
     width: 100%;
@@ -291,7 +308,7 @@ body {
     }
 
     &.notification-snackbar {
-      color: #f8d03eff;
+      color: $warning;
     }
   }
 
@@ -313,5 +330,13 @@ body {
 
   .la-ball-clip-rotate div {
     border-width: 1px !important;
+  }
+
+  .mat-drawer-container {
+    background-color: transparent;
+  }
+
+  .mat-tab-group {
+    background-color: $light-bg;
   }
 }

@@ -7,14 +7,14 @@ import { StopPropagationDirective } from './directives/stop-propagation.directiv
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { ImageSkeletonWrapperDirective } from './directives/image-skeleton-wrapper.directive';
+import { ImgLoadingContainerDirective } from './directives/img-loading-container.directive';
 
 @NgModule({
   declarations: [
     ClearObservable,
     ImageFadeInDirective,
     StopPropagationDirective,
-    ImageSkeletonWrapperDirective,
+    ImgLoadingContainerDirective,
   ],
   imports: [
     CommonModule,
@@ -30,7 +30,7 @@ import { ImageSkeletonWrapperDirective } from './directives/image-skeleton-wrapp
     MatCardModule,
     MatIconModule,
     MatButtonModule,
-    ImageSkeletonWrapperDirective,
+    ImgLoadingContainerDirective,
   ],
 })
 export class SharedModule {}

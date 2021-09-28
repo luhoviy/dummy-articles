@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { fadeIn } from '../../animations';
+import { fadeInOut } from '../../animations';
 import { NotificationsService } from '../../services/notifications.service';
 import { isEmpty, last } from 'lodash';
 
@@ -7,7 +7,7 @@ import { isEmpty, last } from 'lodash';
   selector: 'app-file-uploader',
   templateUrl: './file-uploader.component.html',
   styleUrls: ['./file-uploader.component.scss'],
-  animations: [fadeIn],
+  animations: [fadeInOut],
 })
 export class FileUploaderComponent {
   @Input() showDropzone: boolean = true;

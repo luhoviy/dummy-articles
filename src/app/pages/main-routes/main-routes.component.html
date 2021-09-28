@@ -36,9 +36,14 @@
     class="header__profile-btn"
   >
     <span fxLayoutAlign="start center" fxLayoutGap="0.7rem">
-      <div fxFlex="40px" imageSkeletonWrapper sizeUnit="px" [size]="40">
-        <img [src]="user.photoUrl" alt="avatar" />
-      </div>
+      <div
+        fxFlex="40px"
+        imgLoadingContainer
+        sizeUnit="px"
+        [size]="40"
+        [src]="user.photoUrl"
+        alt="avatar"
+      ></div>
       <span class="m-0 mat-h4 header__profile-btn__display-name">
         {{ user.displayName }}
       </span>

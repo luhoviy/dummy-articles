@@ -5,9 +5,12 @@
 >
   <mat-card fxFlex="30" fxFlex.lt-lg="50" fxFlex.lt-md="70" fxFlex.xs="100">
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0.5rem">
-      <div imageSkeletonWrapper [size]="15">
-        <img [src]="user.photoUrl" alt="profile-photo" />
-      </div>
+      <div
+        imgLoadingContainer
+        [size]="15"
+        [src]="user.photoUrl"
+        alt="profile-photo"
+      ></div>
       <h2 class="m-0" text-center>{{ user.displayName }}</h2>
     </div>
     <mat-list class="profile-info-wrapper__info-list">
