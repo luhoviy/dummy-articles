@@ -16,14 +16,15 @@ import { fadeIn } from '../../../../shared/animations';
   animations: [fadeIn],
 })
 export class WidgetsComponent extends ClearObservable implements OnInit {
-  weather: Weather;
-  currentNytArticle: NytArticle;
-  iterator: number = 0;
   hasLocationPermissions$: Observable<boolean> = this.store
     .select(fromWidgetsFeature.getGeolocation)
     .pipe(map((location) => !!location));
   isNetworkOnline$: Observable<boolean> = this.store.select(getIsNetworkOnline);
-  showNewsWidget: boolean = false;
+
+  weather: Weather;
+  currentNytArticle: NytArticle;
+  newsIterator: number = 0;
+  showNewsWidget: boolean;
 
   constructor(private store: Store) {
     super();
@@ -33,13 +34,13 @@ export class WidgetsComponent extends ClearObservable implements OnInit {
     this.store
       .select(fromWidgetsFeature.getWeatherWidget)
       .pipe(
-        takeUntil(this.destroy$),
         filter((res) => !!res),
         map((res) => {
           res = { ...res };
           res.dt *= 1000;
           return res;
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe((res) => {
         this.weather = res;
@@ -53,11 +54,11 @@ export class WidgetsComponent extends ClearObservable implements OnInit {
         switchMap((news) =>
           timer(0, 15 * 1000).pipe(
             tap(() => {
-              this.iterator >= news.length - 1
-                ? (this.iterator = 0)
-                : this.iterator++;
+              this.newsIterator >= news.length - 1
+                ? (this.newsIterator = 0)
+                : this.newsIterator++;
               this.showNewsWidget = false;
-              this.currentNytArticle = news[this.iterator];
+              this.currentNytArticle = news[this.newsIterator];
             }),
             delay(100)
           )
