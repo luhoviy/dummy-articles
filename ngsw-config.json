@@ -8,7 +8,7 @@
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 100,
-        "maxAge": "1d",
+        "maxAge": "3d",
         "timeout": "10s"
       }
     }
