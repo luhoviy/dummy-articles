@@ -1,6 +1,6 @@
 <div class="pl-1" h-100 fxLayout="column">
   <ng-container *ngIf="!!weather">
-    <mat-card class="widget mb-1">
+    <mat-card class="weather-widget mb-1">
       <div class="text-light" fxLayoutAlign="space-between center">
         <span class="mb-05 mat-body-strong">WEATHER WIDGET</span>
 
@@ -31,6 +31,7 @@
         </div>
         <img
           fxFlex="100px"
+          class="weather-widget__icon"
           src="https://openweathermap.org/img/wn/{{
             weather.weather[0].icon
           }}@2x.png"
@@ -41,14 +42,14 @@
   </ng-container>
 
   <ng-container *ngIf="!!currentNytArticle">
-    <mat-card fxFlex="grow" class="p-0 widget">
+    <mat-card fxFlex="grow" class="p-0 news-widget">
       <div
         fxLayout="column"
         [@fadeInState]="showNewsWidget ? 'shown' : 'hidden'"
         h-100
       >
         <div
-          class="widget__photo"
+          class="news-widget__photo"
           imgLoadingContainer
           [src]="currentNytArticle.multimedia[0]?.url || ''"
         ></div>
