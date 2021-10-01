@@ -1,6 +1,6 @@
 <div class="pl-1" h-100 fxLayout="column">
   <ng-container *ngIf="!!weather">
-    <mat-card class="widget">
+    <mat-card class="widget mb-1">
       <div class="text-light" fxLayoutAlign="space-between center">
         <span class="mb-05 mat-body-strong">WEATHER WIDGET</span>
 
@@ -41,7 +41,7 @@
   </ng-container>
 
   <ng-container *ngIf="!!currentNytArticle">
-    <mat-card fxFlex="grow" class="mt-1 p-0 widget">
+    <mat-card fxFlex="grow" class="p-0 widget">
       <div
         fxLayout="column"
         [@fadeInState]="showNewsWidget ? 'shown' : 'hidden'"

@@ -17,11 +17,11 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { getIsNetworkOnline } from '../../../store/selectors/app.selectors';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  selector: 'app-articles',
+  templateUrl: './articles.component.html',
+  styleUrls: ['./articles.component.scss'],
 })
-export class DashboardComponent
+export class ArticlesComponent
   extends ClearObservable
   implements AfterViewInit, OnInit
 {

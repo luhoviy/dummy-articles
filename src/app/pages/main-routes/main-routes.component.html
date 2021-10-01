@@ -7,7 +7,7 @@
 >
   <div fxFlex="1 1 auto">
     <a
-      routerLink="/display/dashboard"
+      routerLink="/display/articles"
       pointer
       class="header__logo"
       fxLayoutAlign="start center"
@@ -75,11 +75,23 @@
       <div fxFlex="grow">
         <a
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           mat-list-item
-          routerLink="/display/dashboard"
+          routerLink="/display/articles"
           (click)="!isDesktop ? sideNav.close() : null"
         >
-          Dashboard
+          <mat-icon class="mr-05" mat-list-icon>dashboard</mat-icon>
+          Articles
+        </a>
+        <mat-divider></mat-divider>
+        <a
+          routerLinkActive="active"
+          mat-list-item
+          routerLink="/display/articles/create"
+          (click)="!isDesktop ? sideNav.close() : null"
+        >
+          <mat-icon class="mr-05" mat-list-icon>add_circle</mat-icon>
+          New Article
         </a>
         <mat-divider></mat-divider>
         <a
@@ -88,6 +100,7 @@
           routerLink="/display/profile"
           (click)="!isDesktop ? sideNav.close() : null"
         >
+          <mat-icon class="mr-05" mat-list-icon>account_circle</mat-icon>
           Profile
         </a>
       </div>
@@ -100,12 +113,12 @@
 
   <ng-container *ngIf="isDesktop" [ngTemplateOutlet]="navList"></ng-container>
 
-  <mat-sidenav-container fxFlex="grow" class="main-container__content-wrapper">
+  <mat-sidenav-container fxFlex="grow">
     <mat-sidenav *ngIf="!isDesktop" #sideNav>
       <ng-container [ngTemplateOutlet]="navList"></ng-container>
     </mat-sidenav>
 
-    <mat-sidenav-content class="p-1 main-container__content-wrapper__content">
+    <mat-sidenav-content class="p-1">
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>

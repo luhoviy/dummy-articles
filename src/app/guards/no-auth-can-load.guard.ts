@@ -22,7 +22,7 @@ export class NoAuthCanLoadGuard implements CanLoad {
       switchMap(() => this.store.select(fromAuthFeature.getIsLoggedIn)),
       map((isLoggedIn) => !isLoggedIn),
       tap((isLoggedOut) =>
-        isLoggedOut ? null : this.router.navigate(['display'])
+        isLoggedOut ? null : this.router.navigate(['display/articles'])
       ),
       take(1)
     );

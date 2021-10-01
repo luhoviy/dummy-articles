@@ -231,7 +231,7 @@ export class AuthEffects {
         skipWhile(() => this.router.url === '/password-recovery'),
         map(({ user }) => !!user),
         tap((isLoggedIn) => {
-          this.router.navigate(isLoggedIn ? ['display/dashboard'] : ['login']);
+          this.router.navigate(isLoggedIn ? ['display/articles'] : ['login']);
         })
       ),
     { dispatch: false }

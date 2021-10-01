@@ -9,6 +9,7 @@ import { Effects } from './store/effects/effects';
 import { SharedModule } from '../../../../shared/shared.module';
 import { PipesModule } from '../../../../shared/pipes/pipes.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [WidgetsComponent],
@@ -19,6 +20,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     SharedModule,
     PipesModule,
     MatTooltipModule,
+    HttpClientModule,
   ],
   exports: [WidgetsComponent],
   providers: [WidgetsService],

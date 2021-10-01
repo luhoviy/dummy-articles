@@ -1,26 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DashboardComponent } from './dashboard.component';
-import { HttpClientModule } from '@angular/common/http';
+import { ArticlesRoutingModule } from './articles-routing.module';
+import { ArticlesComponent } from './articles.component';
 import { WidgetsModule } from './widgets/widgets.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SharedModule } from '../../../shared/shared.module';
-import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [ArticlesComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: DashboardComponent,
-      },
-    ]),
-    HttpClientModule,
+    ArticlesRoutingModule,
     WidgetsModule,
     MatSidenavModule,
     SharedModule,
   ],
 })
-export class DashboardModule {}
+export class ArticlesModule {}

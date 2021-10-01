@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
-import { AngularFireAuthGuard, redirectLoggedInTo, redirectUnauthorizedTo, } from '@angular/fire/compat/auth-guard';
+import {
+  AngularFireAuthGuard,
+  redirectLoggedInTo,
+  redirectUnauthorizedTo,
+} from '@angular/fire/compat/auth-guard';
 import { NoAuthCanLoadGuard } from './guards/no-auth-can-load.guard';
 import { AuthCanLoadGuard } from './guards/auth-can-load.guard';
 
 const redirectLoggedInToDashboard = () =>
-  redirectLoggedInTo(['display/dashboard']);
+  redirectLoggedInTo(['display/articles']);
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
 const routes: Routes = [
@@ -34,7 +38,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/password-recovery/password-recovery.module').then(
         (m) => m.PasswordRecoveryModule
-      )
+      ),
   },
   {
     path: 'display',

@@ -10,13 +10,13 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'dashboard',
+        redirectTo: 'articles',
       },
       {
-        path: 'dashboard',
+        path: 'articles',
         loadChildren: () =>
-          import('./dashboard/dashboard.module').then(
-            (module) => module.DashboardModule
+          import('./articles/articles.module').then(
+            (module) => module.ArticlesModule
           ),
       },
       {
@@ -28,7 +28,7 @@ const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: 'dashboard',
+        redirectTo: 'articles',
       },
     ],
   },
@@ -38,5 +38,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class MainRoutesRoutingModule {
-}
+export class MainRoutesRoutingModule {}
