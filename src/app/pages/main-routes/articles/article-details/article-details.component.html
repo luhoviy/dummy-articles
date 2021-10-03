@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <app-article-actions-menu [article]="article"></app-article-actions-menu>
+    <app-article-actions-menu [disabled]="!(isNetworkOnline$ | async)" [article]="article"></app-article-actions-menu>
   </div>
 
   <div class="mat-divider mt-1 mb-1"></div>

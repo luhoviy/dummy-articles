@@ -1,5 +1,5 @@
-<button [mat-menu-trigger-for]="actionsMenu" mat-icon-button>
-  <mat-icon>{{ showVerticalIcon ? "more_horiz" : "more_vert" }}</mat-icon>
+<button [disabled]="disabled" [mat-menu-trigger-for]="actionsMenu" mat-icon-button>
+  <mat-icon>{{ showVerticalIcon ? "more_vert" : "more_horiz"}}</mat-icon>
 </button>
 
 <mat-menu xPosition="before" #actionsMenu="matMenu">
