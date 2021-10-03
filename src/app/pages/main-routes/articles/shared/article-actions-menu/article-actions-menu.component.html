@@ -1,0 +1,18 @@
+<button [mat-menu-trigger-for]="actionsMenu" mat-icon-button>
+  <mat-icon>{{ showVerticalIcon ? "more_horiz" : "more_vert" }}</mat-icon>
+</button>
+
+<mat-menu xPosition="before" #actionsMenu="matMenu">
+  <a
+    [routerLink]="['/display/articles', article.id, 'edit']"
+    [state]="{ article: article }"
+    mat-menu-item
+  >
+    <mat-icon color="primary">edit</mat-icon>
+    <span>Edit</span>
+  </a>
+  <button mat-menu-item (click)="deleteArticle()">
+    <mat-icon color="warn">delete_forever</mat-icon>
+    <span>Delete</span>
+  </button>
+</mat-menu>

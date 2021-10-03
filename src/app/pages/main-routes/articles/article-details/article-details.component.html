@@ -1,1 +1,55 @@
-<p>article-details works!</p>
+<mat-card class="article-container">
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1rem">
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
+      <div
+        imgLoadingContainer
+        [size]="70"
+        sizeUnit="px"
+        fxFlex="70px"
+        [src]="article.author.photoUrl"
+        alt="author-photo"
+      ></div>
+
+      <div>
+        <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5px">
+          <span class="m-0 mat-h2">
+            {{ article.author.displayName }}
+          </span>
+
+          <span class="mat-caption light-grey" *ngIf="article.author.birthDate">
+            ({{ article.author.birthDate | userAge }} y.o)
+          </span>
+        </div>
+
+        <p class="mat-caption light-grey m-0">
+          Published {{ article.createdAt | humanizedTime }}
+        </p>
+      </div>
+    </div>
+
+    <app-article-actions-menu [article]="article"></app-article-actions-menu>
+  </div>
+
+  <div class="mat-divider mt-1 mb-1"></div>
+
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1rem">
+    <div fxFlex="60" fxFlex.lt-lg="55">
+      <div
+        class="br-10"
+        imgLoadingContainer
+        [src]="article.coverPhotoUrl"
+      ></div>
+    </div>
+
+    <div fxFlex="40" fxFlex.lt-lg="45">
+      <h1 class="m-0">{{ article.title }}</h1>
+      <p class="light-grey mb-1">{{ article.category | titlecase }}</p>
+
+      <div class="mat-divider mb-1"></div>
+
+      <p class="article-container__description">
+        {{ article.description }}
+      </p>
+    </div>
+  </div>
+</mat-card>

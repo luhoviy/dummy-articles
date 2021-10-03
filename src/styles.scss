@@ -304,7 +304,8 @@ body {
     }
 
     &.error-snackbar {
-      color: $error;
+      background: $error-dark;
+      color: $text-light;
     }
 
     &.notification-snackbar {

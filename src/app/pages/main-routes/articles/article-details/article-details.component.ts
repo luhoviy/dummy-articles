@@ -1,21 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Article } from '../shared/models';
-import { take } from 'rxjs/operators';
+import { take, withLatestFrom } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { getCurrentUser } from '../../../../authentication/store';
 
 @Component({
   selector: 'app-article-details',
   templateUrl: './article-details.component.html',
   styleUrls: ['./article-details.component.scss'],
 })
-export class ArticleDetailsComponent implements OnInit {
+export class ArticleDetailsComponent {
   article: Article;
+  isAuthor: boolean;
 
-  constructor(private activateRoute: ActivatedRoute) {
-    this.activateRoute.data
-      .pipe(take(1))
-      .subscribe((data) => (this.article = data.article));
+  constructor(activateRoute: ActivatedRoute, store: Store) {
+    activateRoute.data
+      .pipe(withLatestFrom(store.select(getCurrentUser)), take(1))
+      .subscribe(([{ article }, user]) => {
+        this.article = article;
+        this.isAuthor = this.article.authorId === user.id;
+      });
   }
-
-  ngOnInit(): void {}
 }

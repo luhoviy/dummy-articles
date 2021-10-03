@@ -63,7 +63,7 @@
   </mat-menu>
 </header>
 
-<main fxLayout="row" fxLayoutGap="5px" class="main-container">
+<main fxLayout="row" class="main-container">
   <ng-template #navList>
     <mat-nav-list
       class="p-0 main-container__nav-list"
@@ -87,7 +87,7 @@
         <a
           routerLinkActive="active"
           mat-list-item
-          routerLink="/display/articles/create"
+          routerLink="/display/articles/new"
           (click)="!isDesktop ? sideNav.close() : null"
         >
           <mat-icon class="mr-05" mat-list-icon>add_circle</mat-icon>

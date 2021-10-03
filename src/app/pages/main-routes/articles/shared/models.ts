@@ -1,13 +1,17 @@
+import { User } from '../../../../authentication/shared/auth.model';
+
 export class Article {
   id: string;
   title: string;
   description: string;
   category: ArticleCategory;
-  firebasePhotoUrl: string = null;
-  externalPhotoUrl: string = null;
-  useExternalPhotoUrl: boolean = false;
-  createdAt: string = new Date().toUTCString();
+  coverPhotoUrl: string;
+  createdAt: string;
   editedAt: string = null;
+  authorId: string;
+
+  // for client side
+  author?: User;
 }
 
 export enum ArticleCategory {
@@ -19,7 +23,6 @@ export enum ArticleCategory {
   SPORT = 'SPORT',
   BUSINESS = 'BUSINESS',
   TRAVEL = 'TRAVEL',
-  OTHER = 'OTHER',
 }
 
 export interface SearchConfig {

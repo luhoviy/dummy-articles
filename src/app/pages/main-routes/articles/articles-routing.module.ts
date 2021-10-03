@@ -14,11 +14,26 @@ const routes: Routes = [
           import('./list/list.module').then((module) => module.ListModule),
       },
       {
-        path: 'create',
+        path: 'new',
+        pathMatch: 'full',
         loadChildren: () =>
-          import('./create/create.module').then(
-            (module) => module.CreateModule
+          import('./article-editor/article-editor.module').then(
+            (module) => module.ArticleEditorModule
           ),
+        data: {
+          isCreateMode: true,
+        },
+      },
+      {
+        path: ':id/edit',
+        pathMatch: 'full',
+        loadChildren: () =>
+          import('./article-editor/article-editor.module').then(
+            (module) => module.ArticleEditorModule
+          ),
+        data: {
+          isEditMode: true,
+        },
       },
       {
         path: ':id',
@@ -27,12 +42,6 @@ const routes: Routes = [
           import('./article-details/article-details.module').then(
             (module) => module.ArticleDetailsModule
           ),
-      },
-      {
-        path: ':id/edit',
-        pathMatch: 'full',
-        loadChildren: () =>
-          import('./edit/edit.module').then((module) => module.EditModule),
       },
       {
         path: '**',

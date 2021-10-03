@@ -17,7 +17,7 @@ import {
 } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { assign } from 'lodash';
-import { filter, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import * as fromAuthFeature from '../store';
 import { mergeUserWithDbUserRecord } from '../../shared/utils';
 import { Store } from '@ngrx/store';
@@ -178,26 +178,21 @@ export class AuthService {
 
   public getUserFromDb(id: string): Observable<User> {
     const userDoc = this.afs.doc<User>(`users/${id}`);
-    return userDoc.valueChanges();
+    return userDoc.get().pipe(map((res) => res.data()));
   }
 
   public mergeAndSaveUser(user: User, locallyOnly: boolean = false): void {
-    this.getUserFromDb(user.id)
-      .pipe(
-        take(1),
-        filter((res) => !!res)
-      )
-      .subscribe(
-        (dbUser) => {
-          const mergedUser = mergeUserWithDbUserRecord(user, dbUser);
-          this.store.dispatch(
-            locallyOnly
-              ? fromAuthFeature.updateCurrentUser({ user: mergedUser })
-              : fromAuthFeature.saveUserToDb({ user: mergedUser })
-          );
-        },
-        (err) => console.log('mergeAndSaveUser error', err)
-      );
+    this.getUserFromDb(user.id).subscribe(
+      (dbUser) => {
+        const mergedUser = mergeUserWithDbUserRecord(user, dbUser);
+        this.store.dispatch(
+          locallyOnly
+            ? fromAuthFeature.updateCurrentUser({ user: mergedUser })
+            : fromAuthFeature.saveUserToDb({ user: mergedUser })
+        );
+      },
+      (err) => console.log('mergeAndSaveUser error', err)
+    );
   }
 
   public updateUserInFirebaseAuthStore(user: User) {

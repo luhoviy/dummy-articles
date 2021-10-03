@@ -1,0 +1,161 @@
+<ng-container *ngIf="isNetworkOnline$ | async; else noNetworkMessage">
+  <mat-card>
+    <div
+      fxLayout="row wrap"
+      fxLayoutGap="1rem"
+      fxLayoutAlign="space-between center"
+    >
+      <h2 class="m-0">{{ isEditMode ? "Edit" : "Add new" }} article</h2>
+
+      <span class="mat-caption light-grey" *ngIf="!!lastEdited$">
+        Last edit {{ lastEdited$ | async }}
+      </span>
+    </div>
+
+    <div class="mt-05 mb-1 mat-divider"></div>
+
+    <form
+      (ngSubmit)="isEditMode ? saveArticle() : createArticle()"
+      [formGroup]="form"
+      w-100
+      fxLayout="column"
+      fxLayoutAlign="start end"
+      fxLayoutGap="1rem"
+    >
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="1rem" w-100>
+        <div fxLayout="column" fxLayoutGap="1rem" w-100>
+          <p class="mat-caption">* required fields</p>
+
+          <mat-form-field w-100 appearance="fill">
+            <mat-label>Category</mat-label>
+            <mat-select required formControlName="category">
+              <mat-option
+                *ngFor="let category of categories"
+                [value]="category"
+              >
+                {{ category | titlecase }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('category').hasError('required')">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field w-100 appearance="fill">
+            <mat-label>Title</mat-label>
+            <input
+              name="title"
+              type="text"
+              matInput
+              required
+              formControlName="title"
+              placeholder="Enter an article title"
+              maxlength="50"
+              #titleInput
+            />
+            <mat-hint align="end"
+              >{{ titleInput.value?.length || 0 }}/50</mat-hint
+            >
+            <mat-error *ngIf="form.get('title').hasError('required')">
+              This field is required
+            </mat-error>
+            <mat-error *ngIf="form.get('title').hasError('minlength')">
+              Article title should contain at least 2 symbols
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field w-100 appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea
+              matInput
+              [mat-autosize]="true"
+              [matAutosizeMinRows]="8"
+              required
+              name="description"
+              formControlName="description"
+              placeholder="Describe your article"
+              maxlength="3000"
+              #descriptionInput
+            >
+            </textarea>
+            <mat-hint align="end"
+              >{{ descriptionInput.value?.length || 0 }}/3000</mat-hint
+            >
+            <mat-error *ngIf="form.get('description').hasError('required')">
+              This field is required
+            </mat-error>
+            <mat-error *ngIf="form.get('description').hasError('minlength')">
+              Article description should contain at least 10 symbols
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" w-100>
+          <div
+            fxLayout="row wrap"
+            fxLayoutAlign="space-between center"
+            fxLayoutGap="1rem"
+          >
+            <h2 class="m-0">Cover Photo</h2>
+
+            <button
+              *ngIf="!!temporaryCoverPhotoPath"
+              type="button"
+              (click)="temporaryCoverPhotoPath = null"
+              mat-stroked-button
+              color="warn"
+            >
+              <span class="mat-caption">Use another photo</span>
+            </button>
+          </div>
+
+          <ng-container *ngIf="!!temporaryCoverPhotoPath; else fileUploader">
+            <img
+              [src]="
+                !!temporaryCoverPhotoPath
+                  ? temporaryCoverPhotoPath
+                  : article.coverPhotoUrl
+              "
+              w-100
+              class="mt-1"
+              alt="cover-photo"
+            />
+          </ng-container>
+
+          <ng-template #fileUploader>
+            <app-file-uploader
+              (fileUploaded)="temporaryCoverPhotoPath = $event"
+            ></app-file-uploader>
+          </ng-template>
+        </div>
+      </div>
+
+      <button
+        [disabled]="form.invalid"
+        mat-raised-button
+        type="submit"
+        color="primary"
+      >
+        <span class="mat-h3">
+          {{ !!article ? "Save" : "Publish" }}
+        </span>
+      </button>
+    </form>
+  </mat-card>
+</ng-container>
+
+<ng-template #noNetworkMessage>
+  <mat-card h-100 fxLayoutAlign="center center">
+    <div
+      class="no-network-message light-grey"
+      fxLayoutGap="0.5rem"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+    >
+      <mat-icon class="no-network-message__icon">wifi_off</mat-icon>
+      <h2 text-center class="m-0">
+        Article creating or editing is not available in offline mode
+      </h2>
+    </div>
+  </mat-card>
+</ng-template>
