@@ -1,0 +1,17 @@
+<mat-sidenav-container h-100>
+  <mat-sidenav
+    *ngIf="isDesktop"
+    fxHide.lt-lg
+    class="widgets-container pt-1 pb-1"
+    fxFlex="350px"
+    position="end"
+    mode="side"
+    [disableClose]="true"
+  >
+    <app-widgets *ngIf="isWidgetsVisible"></app-widgets>
+  </mat-sidenav>
+
+  <mat-sidenav-content w-100 class="content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

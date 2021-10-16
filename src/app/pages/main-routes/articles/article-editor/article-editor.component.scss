@@ -1,0 +1,12 @@
+@import "src/app/shared/variables";
+
+.no-network-message {
+  color: $dark-grey;
+
+  &__icon {
+    font-size: 7rem;
+    height: 7rem;
+    width: 7rem;
+    line-height: 7rem;
+  }
+}

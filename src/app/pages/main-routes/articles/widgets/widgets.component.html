@@ -1,0 +1,86 @@
+<div class="pl-1" h-100 fxLayout="column">
+  <ng-container *ngIf="!!weather">
+    <mat-card class="weather-widget mb-1">
+      <div class="text-light" fxLayoutAlign="space-between center">
+        <span class="mb-05 mat-body-strong">WEATHER WIDGET</span>
+
+        <mat-icon
+          *ngIf="!(hasLocationPermissions$ | async) && isNetworkOnline$ | async"
+          matTooltip="Dummy Articles does not have permission to use your location."
+          matTooltipClass="warning-tooltip"
+        >
+          warning
+        </mat-icon>
+      </div>
+
+      <p class="mat-h2 m-0">{{ weather.dt | date: "MMMM d" }}</p>
+      <p class="mat-body text-light">{{ weather.dt | date: "EEEE" }}</p>
+
+      <div fxLayoutAlign="start center" fxLayoutGap="2rem">
+        <div fxLayout="column">
+          <div fxFlex="row" fxLayoutAlign="start start" fxLayoutGap="3px">
+            <span class="mat-display-3 m-0">{{
+              weather.main.temp | number: "1.0-0"
+            }}</span>
+            <span class="mat-body">&#8451;</span>
+          </div>
+
+          <span class="text-light"
+            >{{ weather.name }}, {{ weather.sys.country }}</span
+          >
+        </div>
+        <img
+          fxFlex="100px"
+          class="weather-widget__icon"
+          src="https://openweathermap.org/img/wn/{{
+            weather.weather[0].icon
+          }}@2x.png"
+          alt="weather_icon"
+        />
+      </div>
+    </mat-card>
+  </ng-container>
+
+  <ng-container *ngIf="!!currentNytArticle">
+    <mat-card fxFlex="grow" class="p-0 news-widget">
+      <div
+        fxLayout="column"
+        [@fadeInState]="showNewsWidget ? 'shown' : 'hidden'"
+        h-100
+      >
+        <div
+          class="news-widget__photo"
+          imgLoadingContainer
+          [src]="currentNytArticle.multimedia[0]?.url || ''"
+        ></div>
+
+        <div
+          fxFlex="grow"
+          fxLayout="column"
+          fxLayoutAlign="space-between start"
+          class="p-1"
+        >
+          <div>
+            <h2 class="mb-05">{{ currentNytArticle.title }}</h2>
+            <p class="mat-body text-light m-0">
+              {{ currentNytArticle.abstract }}
+            </p>
+          </div>
+
+          <div w-100 fxLayoutAlign="space-between end" fxLayoutGap="3rem">
+            <div fxFlex="grow">
+              <p *ngIf="!!currentNytArticle.byline" class="mat-body m-0">
+                {{ currentNytArticle.byline | lowercase | titlecase }}
+              </p>
+              <p class="mat-caption m-0 text-light">
+                {{ currentNytArticle.published_date | humanizedTime }}
+              </p>
+            </div>
+
+            <a target="_blank" [href]="currentNytArticle.url" link>More...</a>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </ng-container>
+</div>

@@ -41,5 +41,23 @@ export const fadeIn = trigger('fadeInState', [
       visibility: 'hidden',
     })
   ),
+  transition('hidden => shown', [animate('.4s')]),
+]);
+
+export const fadeInOut = trigger('fadeInOutState', [
+  state(
+    'shown',
+    style({
+      opacity: 1,
+      visibility: 'visible',
+    })
+  ),
+  state(
+    'hidden',
+    style({
+      opacity: 0,
+      visibility: 'hidden',
+    })
+  ),
   transition('hidden <=> shown', [animate('.3s')]),
 ]);

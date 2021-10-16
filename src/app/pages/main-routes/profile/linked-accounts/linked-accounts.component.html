@@ -8,9 +8,13 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title fxLayoutAlign="start center" fxLayoutGap="0.5rem">
-          <div imageSkeletonWrapper [size]="24" sizeUnit="px">
-            <img src="assets/icons/google.png" alt="google" />
-          </div>
+          <div
+            imgLoadingContainer
+            [size]="24"
+            sizeUnit="px"
+            src="assets/icons/google.png"
+            alt="google"
+          ></div>
           <span class="mat-h3 m-0">Google</span>
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -26,9 +30,13 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title fxLayoutAlign="start center" fxLayoutGap="0.5rem">
-          <div imageSkeletonWrapper [size]="24" sizeUnit="px">
-            <img src="assets/icons/github.png" alt="github" />
-          </div>
+          <div
+            imgLoadingContainer
+            [size]="24"
+            sizeUnit="px"
+            src="assets/icons/github.png"
+            alt="github"
+          ></div>
           <span class="mat-h3 m-0">GitHub</span>
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -44,9 +52,13 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title fxLayoutAlign="start center" fxLayoutGap="0.5rem">
-          <div imageSkeletonWrapper [size]="24" sizeUnit="px">
-            <img src="assets/icons/facebook.png" alt="facebook" />
-          </div>
+          <div
+            imgLoadingContainer
+            [size]="24"
+            sizeUnit="px"
+            src="assets/icons/facebook.png"
+            alt="facebook"
+          ></div>
           <span class="mat-h3 m-0">Facebook</span>
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -85,9 +97,14 @@
           *ngFor="let account of providersMap[providerType]; last as isLast"
         >
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
-            <div fxFlex="70px" imageSkeletonWrapper [size]="70" sizeUnit="px">
-              <img [src]="account.photoURL" [attr.alt]="account.displayName" />
-            </div>
+            <div
+              fxFlex="70px"
+              [src]="account.photoURL"
+              [alt]="account.displayName"
+              imgLoadingContainer
+              [size]="70"
+              sizeUnit="px"
+            ></div>
 
             <div
               class="linked-accounts-accordion__account-row__info"

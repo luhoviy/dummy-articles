@@ -33,9 +33,12 @@
 
       <div relative *ngFor="let provider of providers; last as isLast">
         <div fxLayoutAlign="space-between center" w-100>
-          <div imageSkeletonWrapper [size]="5">
-            <img [src]="provider.photoURL" [attr.alt]="provider.displayName" />
-          </div>
+          <div
+            imgLoadingContainer
+            [size]="5"
+            [src]="provider.photoURL"
+            [alt]="provider.displayName"
+          ></div>
 
           <mat-slide-toggle
             color="primary"

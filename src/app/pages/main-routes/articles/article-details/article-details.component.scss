@@ -1,0 +1,7 @@
+.article-container {
+  min-height: calc(100% - 2rem);
+
+  &__description {
+    word-break: break-all;
+  }
+}

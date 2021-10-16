@@ -34,6 +34,10 @@ import { ConfirmationDialogModule } from '../../../shared/components/confirmatio
         path: '',
         component: ProfileComponent,
       },
+      {
+        path: '**',
+        redirectTo: '',
+      },
     ]),
     MatTabsModule,
     SharedModule,

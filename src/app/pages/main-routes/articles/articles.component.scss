@@ -1,0 +1,10 @@
+@import "src/app/shared/variables";
+
+.widgets-container {
+  background-color: transparent;
+  border: none;
+}
+
+.content ::ng-deep .light-grey {
+  color: $light-grey;
+}

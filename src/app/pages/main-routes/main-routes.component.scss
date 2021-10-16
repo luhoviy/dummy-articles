@@ -47,6 +47,8 @@
 
   &__nav-list {
     box-shadow: 1px 0 3px 0 rgba(0, 0, 0, 0.24);
+    background-color: $light-bg;
+    margin: 0;
 
     [mat-list-item] {
       font-size: 0.9rem;

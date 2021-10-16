@@ -49,7 +49,7 @@
   <div
     w-100
     [fxLayout]="isEditMode ? 'column' : 'row'"
-    fxLayout.lt-lg="column"
+    [ngClass]="{ 'name-fields-wrapper': !isEditMode }"
     fxLayoutGap="1rem"
     fxLayoutGap.lt-lg="0.5rem"
   >

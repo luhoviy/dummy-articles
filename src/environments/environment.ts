@@ -1,24 +1,23 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: "AIzaSyA_85lkbLypataHRF-o34aW5n2SjPwMZ-A",
-    authDomain: "dummy-articles.firebaseapp.com",
-    projectId: "dummy-articles",
-    storageBucket: "dummy-articles.appspot.com",
-    messagingSenderId: "974748725538",
-    appId: "1:974748725538:web:254b4acedf32958a4cb57b"
-  }
+    apiKey: 'AIzaSyA_85lkbLypataHRF-o34aW5n2SjPwMZ-A',
+    authDomain: 'dummy-articles.firebaseapp.com',
+    projectId: 'dummy-articles',
+    storageBucket: 'dummy-articles.appspot.com',
+    messagingSenderId: '974748725538',
+    appId: '1:974748725538:web:254b4acedf32958a4cb57b',
+  },
+  OPEN_WEATHER_API: {
+    apiKey: 'f7c11f1089f8e6f7bba17e58ef7cf53a',
+    apiUrl: 'https://api.openweathermap.org/data/2.5/weather',
+  },
+  NYT_API: {
+    apiKey: 'ATAi7N3BY7SL4TkhkkPlHpNrWrZrDAHM',
+    apiUrl: 'https://api.nytimes.com/svc/topstories/v2/world.json',
+  },
+  ALGOLIA_API: {
+    apiKey: 'e6a0d47dc46d38b1db8b7921bff463a7',
+    appId: 'FAEOZ8N1P9',
+  },
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
