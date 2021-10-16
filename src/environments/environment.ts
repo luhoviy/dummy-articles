@@ -16,4 +16,8 @@ export const environment = {
     apiKey: 'ATAi7N3BY7SL4TkhkkPlHpNrWrZrDAHM',
     apiUrl: 'https://api.nytimes.com/svc/topstories/v2/world.json',
   },
+  ALGOLIA_API: {
+    apiKey: 'e6a0d47dc46d38b1db8b7921bff463a7',
+    appId: 'FAEOZ8N1P9',
+  },
 };

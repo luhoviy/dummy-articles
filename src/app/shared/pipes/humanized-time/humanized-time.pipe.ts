@@ -5,7 +5,7 @@ import * as moment from 'moment';
   name: 'humanizedTime',
 })
 export class HumanizedTimePipe implements PipeTransform {
-  transform(time: string): string {
+  transform(time: string | number): string {
     return !!time
       ? moment.duration(moment(time).diff(moment())).get('months') < 0
         ? moment(time).format('MMM DD, YYYY')

@@ -14,4 +14,5 @@ export const ARTICLE_CATEGORIES_LIST = [
 export const InitialSearchConfig: SearchConfig = {
   selectedCategory: 'ALL',
   sortOrder: 'desc',
+  searchKeyword: '',
 };

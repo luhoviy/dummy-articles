@@ -1,5 +1,5 @@
 <ng-container *ngIf="isNetworkOnline$ | async; else noNetworkMessage">
-  <mat-card>
+  <mat-card class="mt-1 mb-1">
     <div
       fxLayout="row wrap"
       fxLayoutGap="1rem"
@@ -103,7 +103,6 @@
               type="button"
               (click)="temporaryCoverPhotoPath = null"
               mat-stroked-button
-              color="warn"
             >
               <span class="mat-caption">Use another photo</span>
             </button>
@@ -145,17 +144,19 @@
 </ng-container>
 
 <ng-template #noNetworkMessage>
-  <mat-card h-100 fxLayoutAlign="center center">
-    <div
-      class="no-network-message light-grey"
-      fxLayoutGap="0.5rem"
-      fxLayout="column"
-      fxLayoutAlign="center center"
-    >
-      <mat-icon class="no-network-message__icon">wifi_off</mat-icon>
-      <h2 text-center class="m-0">
-        Article creating or editing is not available in offline mode
-      </h2>
-    </div>
-  </mat-card>
+  <div h-100 class="pb-1 pt-1">
+    <mat-card h-100 fxLayoutAlign="center center">
+      <div
+        class="no-network-message light-grey"
+        fxLayoutGap="0.5rem"
+        fxLayout="column"
+        fxLayoutAlign="center center"
+      >
+        <mat-icon class="no-network-message__icon">wifi_off</mat-icon>
+        <h2 text-center class="m-0">
+          Article creating or editing is not available in offline mode
+        </h2>
+      </div>
+    </mat-card>
+  </div>
 </ng-template>

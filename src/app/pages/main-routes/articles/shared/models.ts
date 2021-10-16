@@ -6,8 +6,8 @@ export class Article {
   description: string;
   category: ArticleCategory;
   coverPhotoUrl: string;
-  createdAt: string;
-  editedAt: string = null;
+  createdAt: number;
+  editedAt: number = null;
   authorId: string;
 
   // for client side
@@ -28,4 +28,5 @@ export enum ArticleCategory {
 export interface SearchConfig {
   selectedCategory: ArticleCategory | 'ALL';
   sortOrder: 'asc' | 'desc';
+  searchKeyword: string;
 }

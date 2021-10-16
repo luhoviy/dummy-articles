@@ -1,1 +1,213 @@
-<p>list works!</p>
+<div class="list-container" relative fxLayout="column">
+  <div fxFlex="grow">
+    <div class="list-container__search-panel mt-1 p-1">
+      <form
+        [formGroup]="searchForm"
+        fxLayout="row wrap"
+        fxLayout.xs="column"
+        fxLayoutAlign="space-between start"
+        fxLayoutGap="1rem"
+        w-100
+      >
+        <mat-form-field
+          w-100
+          class="list-container__search-panel__search-input"
+          appearance="outline"
+        >
+          <mat-label>Search</mat-label>
+          <input
+            #searchInput
+            placeholder="Type to search..."
+            autocomplete="off"
+            type="search"
+            formControlName="searchKeyword"
+            matInput
+          />
+          <button
+            *ngIf="!!searchInput.value"
+            matSuffix
+            mat-icon-button
+            color="primary"
+            type="button"
+            [disabled]="!isNetworkOnline || isLoading"
+            (click)="clearSearchInput()"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <div
+          ngClass.xs="w-100"
+          fxLayoutGap="1rem"
+          fxLayout="row wrap"
+          fxLayout.xs="column"
+          fxLayoutAlign="end center"
+        >
+          <mat-form-field ngClass.xs="w-100" appearance="outline">
+            <mat-label>Show</mat-label>
+            <mat-select formControlName="selectedCategory">
+              <mat-option value="ALL"> All</mat-option>
+              <mat-option
+                *ngFor="let category of categories"
+                [value]="category"
+              >
+                {{ category | titlecase }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field ngClass.xs="w-100" appearance="outline">
+            <mat-label>Order By</mat-label>
+            <mat-select formControlName="sortOrder">
+              <mat-option value="desc"> Newest</mat-option>
+              <mat-option value="asc"> Oldest</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </form>
+    </div>
+
+    <ng-container *ngIf="!isNetworkOnline">
+      <mat-card class="mt-1">
+        <p class="list-container__offline-mode-warning">
+          <mat-icon class="list-container__offline-mode-warning__icon"
+            >wifi_off
+          </mat-icon>
+          In offline mode only cached data is displayed, some features like
+          "Search" are not available as well.
+        </p>
+      </mat-card>
+    </ng-container>
+
+    <ng-container *ngIf="list.length">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="start stretch"
+        *ngFor="let row of chunks[currentPage]"
+      >
+        <div
+          fxFlex="33.3"
+          fxFlex.sm="50"
+          fxFlex.xs="100"
+          class="p-1"
+          *ngFor="let article of row; last as isLast; first as isFirst"
+        >
+          <mat-card
+            h-100
+            class="p-0 br-10 list-container__article-wrapper"
+            fxLayout="column"
+          >
+            <div fxFlex="grow" fxLayout="column">
+              <!--              <img [src]="article.coverPhotoUrl" w-100 alt="">-->
+
+              <div
+                class="list-container__article-wrapper__image"
+                relative
+                imgLoadingContainer
+                [src]="article.coverPhotoUrl"
+              >
+                <app-article-actions-menu
+                  *ngIf="article.authorId === currentUser.id"
+                  class="list-container__article-wrapper__action-buttons"
+                  [redirectAfterDeletion]="false"
+                  [iconOnlyButton]="false"
+                  [article]="article"
+                ></app-article-actions-menu>
+              </div>
+
+              <div class="p-1" fxFlex="grow" fxLayout="column">
+                <div
+                  class="list-container__article-wrapper__category-wrapper"
+                  fxLayoutAlign="space-between center"
+                >
+                  <span>{{ article.category | titlecase }}</span>
+                  <span>{{ article.createdAt | humanizedTime }}</span>
+                </div>
+
+                <h2 class="mt-05 list-container__article-wrapper__title">
+                  {{ article.title }}
+                </h2>
+
+                <div
+                  class="mat-body list-container__article-wrapper__description"
+                >
+                  {{ article.description }}
+                </div>
+              </div>
+            </div>
+
+            <div
+              w-100
+              fxLayoutAlign="space-between center"
+              fxLayoutGap="1rem"
+              class="pl-1 pr-1 pb-1"
+            >
+              <div
+                *ngIf="!!article.author"
+                class="list-container__article-wrapper__author"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutGap="0.5rem"
+              >
+                <div
+                  imgLoadingContainer
+                  [size]="40"
+                  sizeUnit="px"
+                  fxFlex="40px"
+                  [src]="article.author.photoUrl"
+                  alt="author-photo"
+                ></div>
+
+                <span
+                  class="list-container__article-wrapper__author__display-name"
+                  >{{ article.author.displayName }}</span
+                >
+              </div>
+
+              <a no-wrap link [routerLink]="['/display/articles', article.id]"
+                >Read more</a
+              >
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    fxLayoutGap="1rem"
+    class="list-container__paginator mt-1 mb-1 pl-1"
+  >
+    <div fxFlex="25px">
+      <mat-spinner *ngIf="isLoading" [diameter]="25"></mat-spinner>
+    </div>
+
+    <mat-paginator
+      [length]="list.length"
+      [pageIndex]="currentPage"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="paginatorPageSizeOptions"
+      (page)="paginatorChanges$.next($event)"
+      [disabled]="!list.length"
+      [ngClass]="{ disabled: !list.length }"
+    >
+    </mat-paginator>
+  </div>
+
+  <div
+    absolute-mid
+    no-pointer
+    class="list-container__empty-state"
+    fxLayoutGap="0.5rem"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    [@fadeInOutState]="!isLoading && !list.length ? 'shown' : 'hidden'"
+  >
+    <mat-icon class="list-container__empty-state__icon"
+      >travel_explore
+    </mat-icon>
+    <h2 text-center class="m-0">No Articles Found</h2>
+  </div>
+</div>

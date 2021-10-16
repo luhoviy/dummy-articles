@@ -29,7 +29,8 @@
           "https://fonts.googleapis.com",
           "https://fonts.gstatic.com",
           "https://static01.nyt.com",
-          "https://openweathermap.org"
+          "https://openweathermap.org",
+          "https://picsum.photos"
         ]
       }
     },

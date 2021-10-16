@@ -1,0 +1,145 @@
+@import "src/app/shared/variables";
+
+.w-100 {
+  width: 100%;
+}
+
+.list-container {
+  min-height: 100%;
+
+  &__search-panel {
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    ::ng-deep {
+      .mat-form-field-wrapper {
+        padding-bottom: 0;
+      }
+
+      .mat-form-field:not(.mat-form-field-disabled) {
+        .mat-form-field-outline-thick {
+          color: $primary-color;
+        }
+      }
+    }
+
+    &__search-input {
+      @media screen and (min-width: 600px) {
+        max-width: 320px;
+      }
+    }
+  }
+
+  &__offline-mode-warning {
+    color: $warning-dark;
+
+    &__icon {
+      vertical-align: middle;
+      margin-right: 0.25rem;
+    }
+  }
+
+  &__paginator {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    background-color: $primary-color;
+    box-shadow: 0 -2px 5px 0 rgba(0, 0, 0, 0.5);
+
+    .mat-spinner ::ng-deep circle {
+      stroke: $text-light;
+    }
+
+    mat-paginator {
+      transition: opacity 0.3s ease-in-out;
+
+      &.disabled {
+        opacity: 0.5;
+      }
+
+      ::ng-deep {
+        background-color: transparent;
+        font-size: 0.95rem;
+
+        &,
+        .mat-select-arrow,
+        .mat-select-value {
+          color: $text-light;
+        }
+
+        .mat-form-field-underline {
+          background-color: $text-light;
+        }
+
+        .mat-button-disabled {
+          color: $light-grey;
+        }
+
+        .mat-form-field {
+          color: $text-light !important;
+
+          .mat-form-field-outline-thick {
+            color: $text-light !important;
+          }
+        }
+      }
+    }
+  }
+
+  &__empty-state {
+    color: $light-grey;
+
+    &__icon {
+      font-size: 7rem;
+      height: 7rem;
+      width: 7rem;
+      line-height: 7rem;
+    }
+  }
+
+  &__article-wrapper {
+    &__action-buttons {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      z-index: 1;
+    }
+
+    &__image {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    &__category-wrapper {
+      color: $light-grey;
+    }
+
+    &__description,
+    &__title {
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      word-break: break-all;
+    }
+
+    &__title {
+      -webkit-line-clamp: 2;
+    }
+
+    &__author {
+      overflow: hidden;
+
+      &__display-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-<mat-card class="article-container">
+<mat-card class="article-container mt-1 mb-1">
   <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1rem">
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
       <div
@@ -27,7 +27,11 @@
       </div>
     </div>
 
-    <app-article-actions-menu [disabled]="!(isNetworkOnline$ | async)" [article]="article"></app-article-actions-menu>
+    <app-article-actions-menu
+      *ngIf="article.authorId === (currentUser$ | async).id"
+      [disabled]="!(isNetworkOnline$ | async)"
+      [article]="article"
+    ></app-article-actions-menu>
   </div>
 
   <div class="mat-divider mt-1 mb-1"></div>

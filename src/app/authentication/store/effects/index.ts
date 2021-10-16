@@ -18,8 +18,15 @@ import { AuthService } from '../../services/auth.service';
 import { User, UserAdditionalInfo } from '../../shared/auth.model';
 import firebase from 'firebase/compat/app';
 import { Store } from '@ngrx/store';
-import { mergeUserWithDbUserRecord } from '../../../shared/utils';
+import {
+  getUserSearchConfigFromLocaleStorage,
+  mergeUserWithDbUserRecord,
+} from '../../../shared/utils';
 import { updateLoadingState } from '../../../store/actions/app.actions';
+import {
+  clearArticlesStore,
+  updateSearchConfig,
+} from '../../../pages/main-routes/articles/store';
 
 @Injectable()
 export class AuthEffects {
@@ -223,16 +230,31 @@ export class AuthEffects {
 
   // ------------------------------------------
 
-  redirectOnAuthStateChange$ = createEffect(
+  onAuthStateChange$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(fromAuthFeature.updateAuthState),
         skip(1),
+        tap(({ user }) => {
+          if (!user) {
+            this.store.dispatch(clearArticlesStore());
+            return;
+          }
+
+          const currentUserSearchConfig = getUserSearchConfigFromLocaleStorage(
+            user.id
+          );
+          if (!!currentUserSearchConfig) {
+            this.store.dispatch(
+              updateSearchConfig({ searchConfig: currentUserSearchConfig })
+            );
+          }
+        }),
         skipWhile(() => this.router.url === '/password-recovery'),
         map(({ user }) => !!user),
-        tap((isLoggedIn) => {
-          this.router.navigate(isLoggedIn ? ['display/articles'] : ['login']);
-        })
+        tap((isLoggedIn) =>
+          this.router.navigate(isLoggedIn ? ['display/articles'] : ['login'])
+        )
       ),
     { dispatch: false }
   );

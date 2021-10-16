@@ -1,5 +1,20 @@
-<button [disabled]="disabled" [mat-menu-trigger-for]="actionsMenu" mat-icon-button>
-  <mat-icon>{{ showVerticalIcon ? "more_vert" : "more_horiz"}}</mat-icon>
+<button
+  [disabled]="disabled"
+  *ngIf="iconOnlyButton"
+  [mat-menu-trigger-for]="actionsMenu"
+  mat-icon-button
+>
+  <mat-icon>more_horiz</mat-icon>
+</button>
+
+<button
+  [disabled]="disabled"
+  *ngIf="!iconOnlyButton"
+  [mat-menu-trigger-for]="actionsMenu"
+  mat-mini-fab
+  color="primary"
+>
+  <mat-icon>more_horiz</mat-icon>
 </button>
 
 <mat-menu xPosition="before" #actionsMenu="matMenu">

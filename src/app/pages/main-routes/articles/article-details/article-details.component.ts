@@ -4,8 +4,9 @@ import { Article } from '../shared/models';
 import { take, withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { getCurrentUser } from '../../../../authentication/store';
-import { Observable } from "rxjs";
-import { getIsNetworkOnline } from "../../../../store/selectors/app.selectors";
+import { Observable } from 'rxjs';
+import { getIsNetworkOnline } from '../../../../store/selectors/app.selectors';
+import { User } from '../../../../authentication/shared/auth.model';
 
 @Component({
   selector: 'app-article-details',
@@ -13,14 +14,16 @@ import { getIsNetworkOnline } from "../../../../store/selectors/app.selectors";
   styleUrls: ['./article-details.component.scss'],
 })
 export class ArticleDetailsComponent {
-  readonly isNetworkOnline$: Observable<boolean> = this.store.select(getIsNetworkOnline);
+  readonly isNetworkOnline$: Observable<boolean> =
+    this.store.select(getIsNetworkOnline);
+  readonly currentUser$: Observable<User> = this.store.select(getCurrentUser);
   article: Article;
   isAuthor: boolean;
 
   constructor(activateRoute: ActivatedRoute, private store: Store) {
     activateRoute.data
       .pipe(withLatestFrom(store.select(getCurrentUser)), take(1))
-      .subscribe(([{article}, user]) => {
+      .subscribe(([{ article }, user]) => {
         this.article = article;
         this.isAuthor = this.article.authorId === user.id;
       });

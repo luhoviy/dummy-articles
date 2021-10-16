@@ -16,8 +16,8 @@ import { ParseFirebaseErrorMessage } from '../../../../../shared/utils';
 })
 export class ArticleActionsMenuComponent {
   @Input() article: Article;
-  @Input() showVerticalIcon: boolean = false;
   @Input() redirectAfterDeletion: boolean = true;
+  @Input() iconOnlyButton: boolean = true;
   @Input() disabled: boolean = false;
 
   constructor(
@@ -26,8 +26,7 @@ export class ArticleActionsMenuComponent {
     private spinner: NgxSpinnerService,
     private router: Router,
     private notifications: NotificationsService
-  ) {
-  }
+  ) {}
 
   async deleteArticle() {
     const config = new ConfirmDialogData();
@@ -45,7 +44,9 @@ export class ArticleActionsMenuComponent {
         )
         .subscribe(
           () => {
-            this.notifications.success('Article has been successfully deleted!');
+            this.notifications.success(
+              'Article has been successfully deleted!'
+            );
             if (this.redirectAfterDeletion) {
               this.router.navigate(['/display/articles']);
             }
