@@ -2,6 +2,7 @@
   <div fxFlex="grow">
     <div class="list-container__search-panel mt-1 p-1">
       <form
+        *ngIf="!!searchForm"
         [formGroup]="searchForm"
         fxLayout="row wrap"
         fxLayout.xs="column"
