@@ -1,18 +1,22 @@
 import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { ServiceWorkerModule } from "@angular/service-worker";
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { FileUploaderService } from './shared/services/file-uploader.service';
+import { TestModule } from './test-utils/test.module';
+import { NoConnectionModule } from './shared/components/no-connection/no-connection.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
-        ServiceWorkerModule.register('', {enabled: false})
+        TestModule,
+        ServiceWorkerModule.register('', { enabled: false }),
+        NgxSpinnerModule,
+        NoConnectionModule,
       ],
-      declarations: [
-        AppComponent
-      ],
+      declarations: [AppComponent],
+      providers: [FileUploaderService],
     }).compileComponents();
   });
 
