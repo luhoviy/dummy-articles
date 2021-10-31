@@ -4,7 +4,7 @@ import firebase from 'firebase/compat/app';
 import { AuthProviderType, User } from '../shared/auth.model';
 import { AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { MockStore } from '@ngrx/store/testing';
-import { MockUser, testEmailAddress } from '../../test-utils/stub-data';
+import { MockUser, testEmailAddress } from '../../test-utils/mock-data';
 import { of } from 'rxjs';
 import * as fromAuthFeature from '../store';
 import { Store } from '@ngrx/store';

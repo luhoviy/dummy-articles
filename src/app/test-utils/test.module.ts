@@ -7,11 +7,12 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../../environments/environment';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
-import { MockStoreInitialState } from './stub-data';
+import { MockStoreInitialState } from './mock-data';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [],
@@ -23,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatSnackBarModule,
     MatIconModule,
     MatButtonModule,
+    FlexLayoutModule,
   ],
   providers: [
     AngularFireAuth,
@@ -35,6 +37,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AngularFireModule,
     MatIconModule,
     MatButtonModule,
+    FlexLayoutModule,
   ],
 })
 export class TestModule {}
