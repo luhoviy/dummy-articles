@@ -8,13 +8,21 @@ import { environment } from '../../environments/environment';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { MockStoreInitialState } from './stub-data';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
+    BrowserAnimationsModule,
     RouterTestingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    MatSnackBarModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   providers: [
     AngularFireAuth,
@@ -22,6 +30,11 @@ import { MockStoreInitialState } from './stub-data';
     AngularFireStorage,
     provideMockStore({ initialState: MockStoreInitialState }),
   ],
-  exports: [RouterTestingModule, AngularFireModule],
+  exports: [
+    RouterTestingModule,
+    AngularFireModule,
+    MatIconModule,
+    MatButtonModule,
+  ],
 })
 export class TestModule {}
