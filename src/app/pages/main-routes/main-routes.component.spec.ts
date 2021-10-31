@@ -33,7 +33,7 @@ describe('MainRoutesComponent', () => {
 
   it('should subscribe per screen width onInit', () => {
     // @ts-ignore
-    spyOn(component.breakpointObserver, 'observe').and.returnValue(of(null));
+    spyOn(component.breakpointObserver, 'observe').and.returnValue(of({}));
     component.ngOnInit();
     // @ts-ignore
     expect(component.breakpointObserver.observe).toHaveBeenCalled();
